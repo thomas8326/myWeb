@@ -1,3 +1,4 @@
+import Action from '@Model/action';
 import ReduxStorage from '@Model/storage';
 import UserInfo from '@Model/user-info';
 
@@ -10,11 +11,11 @@ export function login(user: UserInfo) {
   };
 }
 
-const loginReducer = (state: ReduxStorage, action: { type: string; user: UserInfo }): ReduxStorage => {
+const loginReducer = (state: ReduxStorage, action: Action<UserInfo>): ReduxStorage => {
   switch (action.type) {
     case LOGIN_USER:
       return {
-        userInfo: action.user,
+        userInfo: action.payload,
       };
     default:
       return state;
