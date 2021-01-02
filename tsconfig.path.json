@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@Model/*": ["src/models/*"],
+      "@Reducer": ["src/reducers"],
+      "@Reducer/*": ["src/reducers/*"],
+      "@Containers/*": ["src/containers/*"],
+      "@Components/*": ["src/components/*"]
+    }
+  }
+}

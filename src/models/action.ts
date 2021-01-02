@@ -1,6 +1,6 @@
-interface Action<T> {
+interface ReduxAction<T> {
   type: string;
   payload: T;
 }
 
-export default Action;
+export default ReduxAction;

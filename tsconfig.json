@@ -15,14 +15,8 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "baseUrl": ".",
-    "paths": {
-      "@Model/*": ["src/models/*"],
-      "@Reducer": ["src/reducers"],
-      "@Reducer/*": ["src/reducers/*"],
-      "@Containers/*": ["src/containers/*"],
-      "@Components/*": ["src/components/*"]
-    }
+    "baseUrl": "."
   },
+  // "extends": "./tsconfig.path.json",
   "include": ["src"]
 }
