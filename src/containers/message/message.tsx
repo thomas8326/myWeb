@@ -1,13 +1,13 @@
 import React from 'react';
-import { PlusCircleFilled } from '@ant-design/icons';
+import CreateNewUser from 'src/containers/message/create-new-user/create-new-user';
+import CreateNewUserButton from 'src/containers/message/create-new-user/create-user-button';
 
 function Message() {
   return (
     <div className="message-content">
-      <div className="flex-row flex-align-center shadow-card">
-        <PlusCircleFilled className="icon padding-m" />
-        <span>New User</span>
-      </div>
+      <CreateNewUserButton>
+        <CreateNewUser />
+      </CreateNewUserButton>
     </div>
   );
 }
