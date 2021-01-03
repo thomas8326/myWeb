@@ -6,6 +6,7 @@
 .flex-row {
   display: flex;
   flex-direction: row;
+  width: 100%;
 }
 
 .flex-col {
@@ -20,40 +21,4 @@
 
 .flex-align-center {
   align-items: center;
-}
-
-.margin-center {
-  margin: auto;
-}
-
-.margin-s {
-  margin: var(--margin-s);
-}
-
-.margin-m {
-  margin: var(--margin-m);
-}
-
-.margin-l {
-  margin: var(--margin-l);
-}
-
-.margin-xl {
-  margin: var(--margin-xl);
-}
-
-.padding-s {
-  padding: var(--margin-s);
-}
-
-.padding-m {
-  padding: var(--margin-m);
-}
-
-.padding-l {
-  padding: var(--margin-l);
-}
-
-.padding-xl {
-  padding: var(--margin-xl);
 }

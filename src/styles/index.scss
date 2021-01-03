@@ -1,5 +1,11 @@
-@import 'src/styles/layout/container.scss';
+// base
 @import 'src/styles/base/variable.scss';
+@import 'src/styles/base/reset.scss';
+@import 'src/styles/base/color.scss';
+
+// container
+@import 'src/styles/layout/container.scss';
+@import 'src/styles/layout/margin.scss';
 
 // pages
 @import 'src/styles/pages/login.scss';
