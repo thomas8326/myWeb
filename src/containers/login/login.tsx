@@ -3,6 +3,7 @@
 // import { LOGIN_USER } from '@Reducer/login.reducer';
 import React, { FormEvent, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import ReduxAction from 'src/models/action';
 import UserInfo from 'src/models/user-info';
 import { LOGIN_USER } from 'src/reducers/login.reducer';
@@ -11,16 +12,17 @@ function Login() {
   const [userName, setUserName] = useState('');
   const [password, setUserPassword] = useState('');
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const login = () => {
-    console.log(userName);
-    console.log(password);
     dispatch({
       type: LOGIN_USER,
       payload: {
         userName,
       },
     } as ReduxAction<UserInfo>);
+
+    history.push('/show-room');
   };
 
   return (
