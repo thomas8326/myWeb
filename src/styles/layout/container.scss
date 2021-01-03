@@ -18,6 +18,10 @@
   justify-content: center;
 }
 
+.flex-align-center {
+  align-items: center;
+}
+
 .margin-center {
   margin: auto;
 }
@@ -36,4 +40,20 @@
 
 .margin-xl {
   margin: var(--margin-xl);
+}
+
+.padding-s {
+  padding: var(--margin-s);
+}
+
+.padding-m {
+  padding: var(--margin-m);
+}
+
+.padding-l {
+  padding: var(--margin-l);
+}
+
+.padding-xl {
+  padding: var(--margin-xl);
 }

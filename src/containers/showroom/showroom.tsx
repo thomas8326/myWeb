@@ -1,14 +1,15 @@
 import React from 'react';
-import ShowroomHeader from 'src/components/header';
 import { Popover, Button } from 'antd';
+import Message from 'src/containers/message/message';
 
 function Showroom() {
   return (
     <>
-      <ShowroomHeader />
-      <Popover title="Message" trigger="click">
-        <Button>Chat</Button>
-      </Popover>
+      <div className="flex-row">
+        <Popover placement="topLeft" title="Message" content={Message} trigger="click">
+          <Button type="primary">Chat</Button>
+        </Popover>
+      </div>
       <div className="full-layout flex-col flex-center"> is Showroom</div>
     </>
   );
