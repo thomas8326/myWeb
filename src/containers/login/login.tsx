@@ -10,11 +10,12 @@ import { LOGIN_USER } from 'src/reducers/login.reducer';
 function Login() {
   const [userName, setUserName] = useState('');
   const [password, setUserPassword] = useState('');
+  const dispatch = useDispatch();
 
   const login = () => {
     console.log(userName);
     console.log(password);
-    useDispatch()({
+    dispatch({
       type: LOGIN_USER,
       payload: {
         userName,
