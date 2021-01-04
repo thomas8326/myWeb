@@ -7,20 +7,24 @@ const CreateNewUserButton = () => {
   const [isCreateUser, setIsCreateUser] = useState(false);
   const [roomName, setRoomName] = useState('');
   const dispatch = useDispatch();
-  const createRoom = () => {
-    dispatch(createChatRoom(roomName));
+  const onClose = () => {
     setIsCreateUser(false);
+    setRoomName('');
+  };
+  const onCreateRoom = () => {
+    dispatch(createChatRoom(roomName));
+    onClose();
   };
 
   return isCreateUser ? (
     <div className="flex-row flex-align-center shadow-card">
-      <RobotFilled className="icon-m R-margin-m" />
+      <RobotFilled className="icon-l R-margin-m padding-m" />
       <input
         className="input-box input-f"
         value={roomName}
         onInput={(e: FormEvent<HTMLInputElement>) => setRoomName(e.currentTarget.value)}
       />
-      <CheckCircleFilled className="primary icon-m L-margin-m" onClick={() => createRoom()} />
+      <CheckCircleFilled className="primary icon-m L-margin-m" onClick={() => onCreateRoom()} />
       <CloseCircleFilled className="primary icon-m L-margin-m" onClick={() => setIsCreateUser(false)} />
     </div>
   ) : (
