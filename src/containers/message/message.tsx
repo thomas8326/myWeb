@@ -4,15 +4,12 @@ import CreateNewUserButton from 'src/containers/message/create-new-user/create-u
 import ReduxStorage from 'src/models/storage';
 
 function Message() {
-  const rooms = useSelector((state: ReduxStorage) => {
-    console.log(state);
-    return state?.rooms ?? [];
-  });
+  const rooms = useSelector((state: ReduxStorage) => state?.rooms);
 
   return (
     <div className="message-content">
       {rooms.map((room) => (
-        <div>{room.roomName}</div>
+        <div key={room.id}>{room.roomName}</div>
       ))}
       <CreateNewUserButton />
     </div>

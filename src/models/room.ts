@@ -1,4 +1,6 @@
 class Room {
+  id!: string;
+
   roomName!: string;
 }
 
