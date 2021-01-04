@@ -1,7 +1,8 @@
 import { combineReducers } from 'redux';
+import ReduxStorage from 'src/models/storage';
 import loginReducer from 'src/reducers/login.reducer';
-import roomReducer from 'src/reducers/message.reducer';
+import roomReducer from 'src/reducers/room.reducer';
 
-const storage = combineReducers({ login: loginReducer, room: roomReducer });
+const storage = combineReducers<ReduxStorage>({ userInfo: loginReducer, rooms: roomReducer });
 
 export default storage;

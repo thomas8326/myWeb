@@ -2,9 +2,9 @@ import Room from 'src/models/room';
 import UserInfo from './user-info';
 
 export class ReduxStorage {
-  userInfo?: UserInfo;
+  userInfo!: UserInfo;
 
-  room?: Room[] = [];
+  rooms: Room[] = [];
 }
 
 export default ReduxStorage;
