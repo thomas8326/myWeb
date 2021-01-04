@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import CreateNewUserButton from 'src/containers/message/create-new-user/create-user-button';
+import CreateNewUserButton from 'src/containers/message/create-user-button';
 import ReduxStorage from 'src/models/storage';
 
 function Message() {
