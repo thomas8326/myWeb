@@ -1,20 +1,17 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import CreateNewUserButton from 'src/containers/message/create-user-button';
-import ChatRoom from 'src/containers/message/room';
-import ReduxStorage from 'src/models/storage';
+import React, { useState } from 'react';
+import ConversationRoom from 'src/containers/message/conversation-room';
+import ChatRoomList from 'src/containers/message/room-list';
 
 function Message() {
-  const rooms = useSelector((state: ReduxStorage) => state?.rooms);
+  const [roomId, setRoomId] = useState('');
 
   return (
     <div className="message-content">
-      {rooms.map((room) => (
-        <div key={room.id} className="B-margin-m">
-          <ChatRoom room={room} />
-        </div>
-      ))}
-      <CreateNewUserButton />
+      {roomId === '' ? (
+        <ChatRoomList onClick={(id: string) => setRoomId(id)} />
+      ) : (
+        <ConversationRoom roomId={roomId} onBackClick={() => setRoomId('')} />
+      )}
     </div>
   );
 }
