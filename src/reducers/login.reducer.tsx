@@ -1,11 +1,12 @@
 import ReduxAction from 'src/models/action';
 import UserInfo from 'src/models/user-info';
 
+export const LOGIN_USER = 'LOGIN_USER';
+
 const initState: UserInfo = {
+  userId: '',
   userName: '',
 };
-
-export const LOGIN_USER = 'LOGIN_USER';
 
 export function login(user: UserInfo) {
   return {

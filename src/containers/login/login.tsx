@@ -7,6 +7,7 @@ import { useHistory } from 'react-router-dom';
 import ReduxAction from 'src/models/action';
 import UserInfo from 'src/models/user-info';
 import { LOGIN_USER } from 'src/reducers/login.reducer';
+import { v4 as uuidv4 } from 'uuid';
 
 function Login() {
   const [userName, setUserName] = useState('');
@@ -18,6 +19,7 @@ function Login() {
     dispatch({
       type: LOGIN_USER,
       payload: {
+        userId: uuidv4(),
         userName,
       },
     } as ReduxAction<UserInfo>);
