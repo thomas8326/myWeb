@@ -6,3 +6,16 @@
 .sender-box {
   flex: 0 0 48px;
 }
+
+.conversation {
+  display: flex;
+}
+
+.conversation-bubble {
+  padding: 3px 5px;
+  background-color: #ade6f5b0;
+}
+
+.mine-bubble {
+  text-align: right;
+}
