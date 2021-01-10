@@ -7,15 +7,24 @@
   flex: 0 0 48px;
 }
 
-.conversation {
-  display: flex;
+.flex-col.conversation {
+  flex-wrap: wrap;
+  align-items: baseline;
 }
 
-.conversation-bubble {
+.bubble {
+  margin: 20px 12px;
+}
+
+.message-text {
   padding: 3px 5px;
   background-color: #ade6f5b0;
 }
 
 .mine-bubble {
-  text-align: right;
+  align-self: flex-end;
+
+  .flex-row {
+    flex-direction: row-reverse;
+  }
 }
