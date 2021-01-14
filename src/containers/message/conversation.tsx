@@ -9,9 +9,11 @@ function Conversation() {
 
   return (
     <div className="conversation flex-1 flex-col">
-      {messages.map((message) => (
-        <ConversationBubble isMine={userInfo.userId === message.senderId} message={message} />
-      ))}
+      <div className="full-layout">
+        {messages.map((message) => (
+          <ConversationBubble isMine={userInfo.userId === message.senderId} message={message} />
+        ))}
+      </div>
     </div>
   );
 }

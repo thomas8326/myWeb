@@ -6,9 +6,10 @@ import { createStore, applyMiddleware } from 'redux';
 import ReduxThunk from 'redux-thunk';
 import { BrowserRouter } from 'react-router-dom';
 import App from 'src/App';
+import websocketMiddleware from 'src/middlewares/message-socket.middleware';
 import storage from './reducers';
 
-const store = createStore(storage, applyMiddleware(ReduxThunk));
+const store = createStore(storage, applyMiddleware(ReduxThunk, websocketMiddleware()));
 
 render(
   <Provider store={store}>

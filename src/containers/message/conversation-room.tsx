@@ -13,7 +13,7 @@ function ConversationRoom(props: { roomId: string; onBackClick: (id: string) => 
     <div className="full-layout flex-col">
       <DetailHeader onBackClick={() => props.onBackClick('')} title={roomInfo!.roomName} />
       <Conversation />
-      <Sender senderId={myUserInfo.userId} />
+      <Sender roomId={roomInfo?.id ?? ''} senderId={myUserInfo.userId} />
     </div>
   );
 }

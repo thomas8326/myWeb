@@ -4,10 +4,10 @@ import { v4 as uuidv4 } from 'uuid';
 
 export const SEND_MESSAGE = 'SEND_MESSAGE';
 
-export function sendMessage(text: string, senderId: string): ReduxAction<Message> {
+export function sendMessage(roomId: string, text: string, senderId: string): ReduxAction<Message> {
   return {
     type: SEND_MESSAGE,
-    payload: { msgId: uuidv4(), content: text, senderId },
+    payload: { msgId: uuidv4(), roomId, content: text, senderId },
   };
 }
 

@@ -5,10 +5,10 @@ import classNames from 'classnames';
 function ConversationBubble(props: { message: Message; isMine: boolean }) {
   const { isMine, message } = props;
   return (
-    <div className={classNames('bubble', { 'mine-bubble': isMine })}>
-      <div className="flex-row">
+    <div className={classNames('bubble', { 'mine-bubble': isMine, 'other-bubble': !isMine })}>
+      <div className="flex-row flex-align-center">
         <div className="message-text">{message.content}</div>
-        <div>time</div>
+        <div className="message-time">{new Date().getTime()}</div>
       </div>
     </div>
   );

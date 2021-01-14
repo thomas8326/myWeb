@@ -4,20 +4,20 @@ import { useDispatch } from 'react-redux';
 import { sendMessage } from 'src/reducers/message.reducer';
 import useEnterKey from 'src/utils/useKeyEnter';
 
-function Sender(props: { senderId: string }) {
-  const { senderId } = props;
+function Sender(props: { roomId: string; senderId: string }) {
+  const { senderId, roomId } = props;
   const [text, setText] = useState('');
   const dispatch = useDispatch();
   const send = () => {
     if (text !== '') {
-      dispatch(sendMessage(text, senderId));
+      dispatch(sendMessage(roomId, text, senderId));
       setText('');
     }
   };
   const enterKey = useEnterKey(send);
 
   return (
-    <div className="flex-row sender-box flex-align-center">
+    <div className="flex-row sender-box flex-align-center padding-m">
       <input
         type="text"
         value={text}
