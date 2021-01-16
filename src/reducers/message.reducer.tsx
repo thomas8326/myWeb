@@ -1,19 +1,18 @@
 import ReduxAction from 'src/models/action';
 import Message from 'src/models/message';
-import { v4 as uuidv4 } from 'uuid';
 
-export const SEND_MESSAGE = 'SEND_MESSAGE';
+export const RECEIVE_MESSAGE = 'RECEIVE_MESSAGE';
 
-export function sendMessage(roomId: string, text: string, senderId: string): ReduxAction<Message> {
+export function receiveMessage(message: Message): ReduxAction<Message> {
   return {
-    type: SEND_MESSAGE,
-    payload: { msgId: uuidv4(), roomId, content: text, senderId },
+    type: RECEIVE_MESSAGE,
+    payload: message,
   };
 }
 
 const messageReducer = (state: Message[] = [], action: ReduxAction<Message>): Message[] => {
   switch (action.type) {
-    case SEND_MESSAGE:
+    case RECEIVE_MESSAGE:
       return [...state, action.payload];
     default:
       return state;

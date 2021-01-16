@@ -1,7 +1,7 @@
 import { SearchOutlined } from '@ant-design/icons';
 import React, { FormEvent, KeyboardEvent, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { sendMessage } from 'src/reducers/message.reducer';
+import { sendMessage } from 'src/middlewares/message-socket.middleware';
 import useEnterKey from 'src/utils/useKeyEnter';
 
 function Sender(props: { roomId: string; senderId: string }) {

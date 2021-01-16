@@ -9,7 +9,7 @@ import App from 'src/App';
 import websocketMiddleware from 'src/middlewares/message-socket.middleware';
 import storage from './reducers';
 
-const store = createStore(storage, applyMiddleware(ReduxThunk, websocketMiddleware()));
+const store = createStore(storage, applyMiddleware(ReduxThunk, websocketMiddleware));
 
 render(
   <Provider store={store}>
