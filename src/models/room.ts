@@ -1,7 +1,7 @@
 class Room {
   id!: string;
 
-  roomName!: string;
+  name!: string;
 }
 
 export default Room;

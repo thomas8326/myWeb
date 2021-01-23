@@ -6,6 +6,8 @@ class Message {
   content!: string;
 
   senderId!: string;
+
+  date?: string;
 }
 
 export default Message;

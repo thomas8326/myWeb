@@ -8,10 +8,9 @@ import ReduxStorage from 'src/models/storage';
 function ConversationRoom(props: { roomId: string; onBackClick: (id: string) => void }) {
   const roomInfo = useSelector((state: ReduxStorage) => state.rooms.find((room) => room.id === props.roomId));
   const myUserInfo = useSelector((state: ReduxStorage) => state.userInfo);
-
   return (
     <div className="full-layout flex-col">
-      <DetailHeader onBackClick={() => props.onBackClick('')} title={roomInfo!.roomName} />
+      <DetailHeader onBackClick={() => props.onBackClick('')} title={roomInfo!.name} />
       <Conversation />
       <Sender roomId={roomInfo?.id ?? ''} senderId={myUserInfo.userId} />
     </div>

@@ -17,6 +17,7 @@ function Showroom() {
           onClose={() => setVisible(false)}
           closable={false}
           maskStyle={{ backgroundColor: 'transparent' }}
+          destroyOnClose
         >
           <Message />
         </Drawer>

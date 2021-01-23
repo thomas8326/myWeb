@@ -8,7 +8,7 @@ function ConversationBubble(props: { message: Message; isMine: boolean }) {
     <div className={classNames('bubble', { 'mine-bubble': isMine, 'other-bubble': !isMine })}>
       <div className="flex-row flex-align-center">
         <div className="message-text">{message.content}</div>
-        <div className="message-time">{new Date().getTime()}</div>
+        <div className="message-time">{message.date}</div>
       </div>
     </div>
   );

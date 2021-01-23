@@ -4,11 +4,14 @@ import Message from 'src/models/message';
 import ReduxStorage from 'src/models/storage';
 import { receiveMessage } from 'src/reducers/message.reducer';
 import { v4 as uuidv4 } from 'uuid';
+import { CompatClient, Stomp } from '@stomp/stompjs';
 
-export const SEND_MESSAGE = 'SEND_MESSAGE';
+export const wsConnect = () => ({ type: 'WS_CONNECT' });
+export const wsDisconnect = () => ({ type: 'WS_DISCONNECT' });
 
 export const WS_CONNECT = 'WS_CONNECT';
 export const WS_DISCONNECT = 'WS_DISCONNECT';
+export const SEND_MESSAGE = 'SEND_MESSAGE';
 
 export function sendMessage(roomId: string, text: string, senderId: string): ReduxAction<Message> {
   return {
@@ -17,37 +20,38 @@ export function sendMessage(roomId: string, text: string, senderId: string): Red
   };
 }
 
-const websocketMiddleware: Middleware<{}, ReduxStorage> = (store) => (next) => (action) => {
-  let socket!: WebSocket;
+const websocketMiddleware: Middleware<{}, ReduxStorage> = (store) => {
+  let stomp!: CompatClient;
 
-  switch (action.type) {
-    case WS_CONNECT:
-      socket = new WebSocket('ws://localhost:8090');
-      socket.onopen = () => {};
-      socket.onmessage = (event: MessageEvent<Message>) => {
-        store.dispatch(receiveMessage(event.data));
-      };
-      break;
-    case WS_DISCONNECT:
-      if (socket !== null) {
-        socket.close();
+  return (next) => (action) => {
+    switch (action.type) {
+      case WS_CONNECT: {
+        stomp = Stomp.over(() => new WebSocket('ws://localhost:8080/chat'));
+        stomp.connect({ user: store.getState().userInfo.userName }, () => {
+          stomp.subscribe('/room/users', (message) => store.dispatch(receiveMessage(JSON.parse(message.body))));
+        });
+        break;
       }
-      break;
-    case SEND_MESSAGE: {
-      const message = {
-        msgId: action.payload.msgId,
-        content: action.payload.content,
-        roomId: action.payload.roomId,
-        senderId: action.payload.senderId,
-      };
-      socket.send(JSON.stringify(message));
-      break;
-    }
-    default:
-    // empty default
-  }
+      case WS_DISCONNECT:
+        if (stomp !== null) {
+          stomp.disconnect();
+        }
+        break;
+      case SEND_MESSAGE: {
+        const message = {
+          msgId: action.payload.msgId,
+          content: action.payload.content,
+          roomId: action.payload.roomId,
+          senderId: action.payload.senderId,
+        };
 
-  return next(action);
+        stomp.send('/app/user-all', {}, JSON.stringify(message));
+        break;
+      }
+      default:
+    }
+    return next(action);
+  };
 };
 
 export default websocketMiddleware;

@@ -7,7 +7,7 @@ const ChatRoom = (props: { room: Room }) => {
   return (
     <div className="flex-row flex-align-center shadow-card">
       <CommentOutlined className="padding-m icon-l" />
-      <div>{room.roomName}</div>
+      <div>{room.name}</div>
     </div>
   );
 };
