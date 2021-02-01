@@ -4,14 +4,14 @@ import UserInfo from 'src/models/user-info';
 export const LOGIN_USER = 'LOGIN_USER';
 
 const initState: UserInfo = {
-  userId: '',
-  userName: '',
+  id: '',
+  name: '',
 };
 
-export function login(user: UserInfo) {
+export function login(user: UserInfo): ReduxAction<UserInfo> {
   return {
     type: LOGIN_USER,
-    user,
+    payload: user,
   };
 }
 

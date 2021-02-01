@@ -11,7 +11,7 @@ function Conversation() {
     <div className="conversation flex-1 flex-col">
       <div className="full-layout">
         {messages.map((message) => (
-          <ConversationBubble isMine={userInfo.userId === message.senderId} message={message} />
+          <ConversationBubble isMine={userInfo.id === message.senderId} message={message} />
         ))}
       </div>
     </div>

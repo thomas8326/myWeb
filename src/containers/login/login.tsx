@@ -1,13 +1,14 @@
 // imt Action from '@Model/action';
 // import UserInfo from '@Model/user-info';
 // import { LOGIN_USER } from '@Reducer/login.reducer';
+import axios from 'axios';
 import React, { FormEvent, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import ReduxAction from 'src/models/action';
+import ApiPath from 'src/constants/api.enum';
+import ResponseContent from 'src/models/response-content';
 import UserInfo from 'src/models/user-info';
-import { LOGIN_USER } from 'src/reducers/login.reducer';
-import { v4 as uuidv4 } from 'uuid';
+import { login } from 'src/reducers/login.reducer';
 
 function Login() {
   const [userName, setUserName] = useState('');
@@ -15,14 +16,12 @@ function Login() {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const login = () => {
-    dispatch({
-      type: LOGIN_USER,
-      payload: {
-        userId: uuidv4(),
-        userName,
-      },
-    } as ReduxAction<UserInfo>);
+  const onLogin = () => {
+    const userInfo = new UserInfo(userName);
+
+    axios.post<ResponseContent<UserInfo>>(ApiPath.Login, userInfo).then((response) => {
+      dispatch(login(response.data.data));
+    });
 
     history.push('/show-room');
   };
@@ -44,7 +43,7 @@ function Login() {
           value={password}
           onInput={(event: FormEvent<HTMLInputElement>) => setUserPassword(event.currentTarget.value)}
         />
-        <input type="submit" className="input-s" value="submit" onClick={() => login()} />
+        <input type="submit" className="input-s" value="submit" onClick={() => onLogin()} />
       </div>
     </div>
   );

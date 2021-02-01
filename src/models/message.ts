@@ -1,11 +1,11 @@
 class Message {
   roomId!: string;
 
-  msgId!: string;
+  msgId?: string;
 
-  content!: string;
+  content?: string;
 
-  senderId!: string;
+  senderId?: string;
 
   date?: string;
 }
