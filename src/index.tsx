@@ -7,9 +7,10 @@ import ReduxThunk from 'redux-thunk';
 import { BrowserRouter } from 'react-router-dom';
 import App from 'src/App';
 import websocketMiddleware from 'src/middlewares/message-socket.middleware';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import storage from './reducers';
 
-const store = createStore(storage, applyMiddleware(ReduxThunk, websocketMiddleware));
+const store = createStore(storage, composeWithDevTools(applyMiddleware(ReduxThunk, websocketMiddleware)));
 
 render(
   <Provider store={store}>
