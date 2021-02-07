@@ -11,7 +11,8 @@ const initState: UserInfo = {
 export function login(user: UserInfo): ReduxAction<UserInfo> {
   return {
     type: LOGIN_USER,
-    payload: user,
+    payload: [],
+    object: user,
   };
 }
 
@@ -20,7 +21,7 @@ const loginReducer = (state = initState, action: ReduxAction<UserInfo>): UserInf
     case LOGIN_USER:
       return {
         ...state,
-        ...action.payload,
+        ...action.object,
       };
     default:
       return state;
