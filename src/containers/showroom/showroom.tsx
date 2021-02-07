@@ -1,28 +1,14 @@
-import { Button, Drawer } from 'antd';
-import React, { useState } from 'react';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import Message from 'src/containers/message/message';
+import ReduxStorage from 'src/models/storage';
 
 function Showroom() {
-  const [visible, setVisible] = useState(false);
+  const myUserInfo = useSelector((state: ReduxStorage) => state.userInfo);
+
   return (
     <>
-      <Button type="primary" onClick={() => setVisible(true)}>
-        Chat
-      </Button>
-      <div className="flex-row">
-        <Drawer
-          width="400px"
-          placement="right"
-          visible={visible}
-          onClose={() => setVisible(false)}
-          closable={false}
-          maskStyle={{ backgroundColor: 'transparent' }}
-          destroyOnClose
-        >
-          <Message />
-        </Drawer>
-      </div>
-      <div className="full-layout flex-col flex-center"> is Showroom</div>
+      <Message userId={myUserInfo.id} />
     </>
   );
 }

@@ -5,9 +5,7 @@ import ReduxStorage from 'src/models/storage';
 import { receiveMessage } from 'src/reducers/message.reducer';
 import { v4 as uuidv4 } from 'uuid';
 import { CompatClient, Stomp } from '@stomp/stompjs';
-
-export const wsConnect = () => ({ type: 'WS_CONNECT' });
-export const wsDisconnect = () => ({ type: 'WS_DISCONNECT' });
+import { isNil } from 'ramda';
 
 export const WS_CONNECT = 'WS_CONNECT';
 export const WS_DISCONNECT = 'WS_DISCONNECT';
@@ -17,6 +15,9 @@ export const STOMP_DISCONNECT_ROOM = 'STOMP_DISCONNECT_ROOM';
 
 export const BROADCAST_MESSAGE = '/all/users';
 export const PRIVATE_MESSAGE = '/chat/room';
+
+export const wsConnect = (userId: string) => ({ type: 'WS_CONNECT', payload: { userId } });
+export const wsDisconnect = () => ({ type: 'WS_DISCONNECT' });
 
 export function sendMessage(roomId: string, text: string, senderId: string): ReduxAction<Message> {
   return {
@@ -47,8 +48,9 @@ const websocketMiddleware: Middleware<{}, ReduxStorage> = (store) => {
       case WS_CONNECT: {
         stomp = Stomp.over(() => new WebSocket('ws://localhost:8080/chat'));
 
-        stomp.connect({}, () => {
-          stomp.subscribe(`/user/queue/specific-user`, (message) =>
+        stomp.connect(action.payload, () => {
+          // stomp.subscribe('/all', (message) => store.dispatch(receiveMessage(JSON.parse(message.body))));
+          stomp.subscribe('/user/queue/subscribe', (message) =>
             store.dispatch(receiveMessage(JSON.parse(message.body))),
           );
         });
@@ -56,7 +58,7 @@ const websocketMiddleware: Middleware<{}, ReduxStorage> = (store) => {
         break;
       }
       case WS_DISCONNECT:
-        if (stomp !== null) {
+        if (!isNil(stomp)) {
           stomp.disconnect();
         }
         break;
@@ -73,7 +75,7 @@ const websocketMiddleware: Middleware<{}, ReduxStorage> = (store) => {
           senderId: action.payload.senderId,
         };
 
-        stomp.send(`/chat/user`, {}, JSON.stringify(message));
+        stomp.send('/chat/user', {}, JSON.stringify(message));
         break;
       }
       default:
