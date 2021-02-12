@@ -2,11 +2,12 @@ import { Middleware } from 'redux';
 import ReduxAction from 'src/models/action';
 import Message from 'src/models/message';
 import ReduxStorage from 'src/models/storage';
-import { receiveMessage } from 'src/reducers/message.reducer';
+// import { receiveMessage } from 'src/reducers/message.reducer';
 import { v4 as uuidv4 } from 'uuid';
 import { CompatClient, Stomp } from '@stomp/stompjs';
 import { isNil } from 'ramda';
 import UserInfo from 'src/models/user-info';
+import { receiveMessage } from 'src/reducers/conversation.reducer';
 
 export const WS_CONNECT = 'WS_CONNECT';
 export const WS_DISCONNECT = 'WS_DISCONNECT';

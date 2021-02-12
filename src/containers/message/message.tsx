@@ -14,7 +14,6 @@ function Message(props: { userId: string }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log('userId', userId);
     if (userId) {
       dispatch(wsConnect(userId));
     }

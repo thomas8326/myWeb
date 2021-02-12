@@ -7,7 +7,6 @@ import ChatRoom from 'src/containers/message/room';
 import ResponseContent from 'src/models/response-content';
 import Room from 'src/models/room';
 import ReduxStorage from 'src/models/storage';
-import UserInfo from 'src/models/user-info';
 import { addParticipant, getChatRooms } from 'src/reducers/room.reducer';
 
 function ChatRoomList(props: { onClick: (id: string) => void }) {
@@ -23,10 +22,10 @@ function ChatRoomList(props: { onClick: (id: string) => void }) {
 
   const user = useSelector((state: ReduxStorage) => state.userInfo);
 
-  const onClickRoom = (roomId: string) => {
-    axios.patch<ResponseContent<UserInfo>>(`${ApiPath.Room}/${roomId}`, user).then((response) => {
-      dispatch(addParticipant(response.data.data));
-      props.onClick(roomId);
+  const onClickRoom = (room: Room) => {
+    axios.patch<ResponseContent<Room>>(`${ApiPath.Room}/${room.id}`, user).then((response) => {
+      dispatch(addParticipant(room, response.data.data.participants));
+      props.onClick(room.id);
     });
   };
 
@@ -38,7 +37,7 @@ function ChatRoomList(props: { onClick: (id: string) => void }) {
           tabIndex={0}
           key={room.id}
           className="B-margin-m"
-          onClick={() => onClickRoom(room.id)}
+          onClick={() => onClickRoom(room)}
           onKeyDown={() => {}}
         >
           <ChatRoom room={room} />

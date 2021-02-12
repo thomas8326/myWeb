@@ -1,13 +1,13 @@
-import Message from 'src/models/message';
+import Conversation from 'src/models/conversation';
 import Room from 'src/models/room';
 import UserInfo from './user-info';
 
-export class ReduxStorage {
+class ReduxStorage {
   userInfo!: UserInfo;
 
   rooms: Room[] = [];
 
-  messages: Message[] = [];
+  conversation!: Conversation;
 }
 
 export default ReduxStorage;
