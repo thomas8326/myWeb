@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import ConversationRoom from 'src/containers/message/conversation-room';
 import ChatRoomList from 'src/containers/message/room-list';
 import { wsConnect, wsDisconnect } from 'src/middlewares/message-socket.middleware';
-import { Button, Drawer } from 'antd';
+import { Drawer } from 'antd';
 
 function Message(props: { userId: string }) {
   const { userId } = props;
@@ -25,9 +25,7 @@ function Message(props: { userId: string }) {
 
   return (
     <>
-      <Button type="primary" onClick={() => setVisible(true)}>
-        Chat
-      </Button>
+      <button type="button" aria-label="mute" className="icon-messenger icon-m" onClick={() => setVisible(true)} />
       <div className="flex-row">
         <Drawer
           width="400px"
