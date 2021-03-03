@@ -1,14 +1,14 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import Message from 'src/containers/message/message';
-import ReduxStorage from 'src/models/storage';
+import ShowroomCard from 'src/containers/showroom/showroom-card';
+import GlobalHeader from 'src/components/global-header';
 
 function Showroom() {
-  const myUserInfo = useSelector((state: ReduxStorage) => state.userInfo);
-
   return (
     <>
-      <Message userId={myUserInfo.id} />
+      <GlobalHeader title="Show Room" />
+      <main className="full-layout flex-col ">
+        <ShowroomCard title="123" />
+      </main>
     </>
   );
 }

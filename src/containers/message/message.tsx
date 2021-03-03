@@ -24,7 +24,7 @@ function Message(props: { userId: string }) {
   }, [userId]);
 
   return (
-    <>
+    <div>
       <button type="button" aria-label="mute" className="icon-messenger icon-m" onClick={() => setVisible(true)} />
       <div className="flex-row">
         <Drawer
@@ -45,8 +45,7 @@ function Message(props: { userId: string }) {
           </div>
         </Drawer>
       </div>
-      <div className="full-layout flex-col flex-center"> is Showroom</div>
-    </>
+    </div>
   );
 }
 
