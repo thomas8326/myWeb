@@ -3,9 +3,14 @@
   height: 100%;
 }
 
+.flex-1 {
+  flex: 1;
+}
+
 .flex-row {
   display: flex;
   flex-direction: row;
+  width: 100%;
 }
 
 .flex-col {
@@ -18,22 +23,6 @@
   justify-content: center;
 }
 
-.margin-center {
-  margin: auto;
-}
-
-.margin-s {
-  margin: var(--margin-s);
-}
-
-.margin-m {
-  margin: var(--margin-m);
-}
-
-.margin-l {
-  margin: var(--margin-l);
-}
-
-.margin-xl {
-  margin: var(--margin-xl);
+.flex-align-center {
+  align-items: center;
 }

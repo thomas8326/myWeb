@@ -6,5 +6,6 @@ module.exports = {
   parserOptions: {
     project: ['./tsconfig.json'],
   },
+  rules: { 'react/prop-types': ['off'] },
   ignorePatterns: ['.eslintrc.js', 'webpack.config.js'],
 };

@@ -1,0 +1,4 @@
+@mixin title($fontSize) {
+  color: #0d0d0e;
+  font-size: #{$fontSize}px;
+}
