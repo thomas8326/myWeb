@@ -1,6 +1,6 @@
 {
-  "homepage": "http://thomas8326.github.io/thomasshih.github.io",
-  "name": "chat-app",
+  "homepage": "http://thomas8326.github.io/myWeb",
+  "name": "thomas-web",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
