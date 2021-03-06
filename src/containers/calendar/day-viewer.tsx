@@ -1,97 +1,78 @@
 import React from 'react';
-import { classNames } from '../utils/classNames';
-import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
 
-const HALF_OF_HOUR = 30;
-const ONE_HOUR = 60;
-const MILITARY_TIME = 24;
+import classNames from 'classnames';
 
-const propTypes = {
-  availableTimes: PropTypes.array,
-  bookedTimes: PropTypes.array,
-  dateKey: PropTypes.number.isRequired,
-  todayKey: PropTypes.number.isRequired,
-  dayOfWeek: PropTypes.string,
-  date: PropTypes.string
-};
+// const HALF_OF_HOUR = 30;
+// const ONE_HOUR = 60;
+// const MILITARY_TIME = 24;
 
-class DayViewer extends React.Component {
-  constructor(props) {
-    super(props);
+export default function DayViewer(props: { dateKey: any; todayKey: any; date: any }) {
+  const { dateKey, todayKey, date } = props;
+  // const todayAvailableTimes = availableTimes.flatMap((availableTime: any) =>
+  //   getTime(availableTime, 'dayContainer-time_available'),
+  // );
+  // const todayBookedTimes = bookedTimes.flatMap((bookedTimes: any) => getTime(bookedTimes, 'dayContainer-time_disable'));
 
-    const { availableTimes, bookedTimes, dateKey, todayKey } = this.props;
+  // this.state = {
+  //   dayTimes: todayAvailableTimes.concat(todayBookedTimes).sort((prev, curr) => prev.value - curr.value),
+  //   dateKey,
+  //   todayKey,
+  // };
 
-    const todayAvailableTimes = availableTimes.flatMap(availableTime => this.getTime(availableTime, 'dayContainer-time_available'));
-    const todayBookedTimes = bookedTimes.flatMap(bookedTimes => this.getTime(bookedTimes, 'dayContainer-time_disable'));
+  // const dayTimeConverter = (time: any) => {
+  //   const clock = time.clock < 10 ? `0${time.clock}` : time.clock;
+  //   const minute = time.minute < 10 ? `0${time.minute}` : time.minute;
+  //   return `${clock}:${minute}`;
+  // };
 
-    this.state = {
-      dayTimes: todayAvailableTimes.concat(todayBookedTimes).sort((prev, curr) => prev.value - curr.value),
-      dateKey,
-      todayKey
-    }
-  }
+  // const getTime = (data: { start: any; end: any }, className: any) => {
+  //   const { start, end } = data;
+  //   let current = start.time;
+  //   const last = end.time;
+  //   const result = [{ text: dayTimeConverter(start.time), className, value: start.clock * 100 + start.minute }];
 
-  dayTimeConverter(time) {
-    const clock = time.clock < 10 ? '0' + time.clock : time.clock;
-    const minute = time.minute < 10 ? '0' + time.minute : time.minute;
-    return clock + ':' + minute;
-  }
+  //   while (current.clock < last.clock) {
+  //     const newCurrent =
+  //       current.minute + HALF_OF_HOUR >= ONE_HOUR
+  //         ? { clock: current.clock + 1, minute: 0 }
+  //         : { clock: current.clock, minute: current.minute + HALF_OF_HOUR };
 
-  getTime({ start, end }, className) {
-    let current = start.time;
-    const last = end.time;
-    const result = [{ text: this.dayTimeConverter(start.time), className: className, value: start.clock * 100 + start.minute }];
+  //     if (newCurrent.clock !== MILITARY_TIME) {
+  //       result.push({
+  //         text: dayTimeConverter(newCurrent),
+  //         className,
+  //         value: newCurrent.clock * 100 + newCurrent.minute,
+  //       });
+  //     }
 
-    while (current.clock < last.clock) {
-      const newCurrent = current.minute + HALF_OF_HOUR >= ONE_HOUR ? { clock: current.clock + 1, minute: 0 } : { clock: current.clock, minute: current.minute + HALF_OF_HOUR };
+  //     current = newCurrent;
+  //   }
 
-      if (newCurrent.clock !== MILITARY_TIME) {
-        result.push({ text: this.dayTimeConverter(newCurrent), className: className, value: newCurrent.clock * 100 + newCurrent.minute });
-      }
+  //   return result;
+  // };
 
-      current = newCurrent;
-    }
+  // const renderTeacherSchedule = () => (
+  //   // if (dateKey < todayKey) {
+  //   //   return;
+  //   // }
 
-    return result;
-  }
+  //   <ul className="timeBoard fontSize-s">
+  //     {dayTimes.map((time, index) => (
+  //       <li key={index} className={`${time.className} time`}>
+  //         {time.text}
+  //       </li>
+  //     ))}
+  //   </ul>
+  // );
+  const renderClassName = () => classNames('dayContainer', { dayViewer_disable: dateKey < todayKey });
 
-  renderTeacherSchedule() {
-    const { dayTimes, dateKey, todayKey } = this.state;
-
-    if (dateKey < todayKey) {
-      return;
-    }
-
-    return (
-      <ul className="timeBoard fontSize-s">
-        {dayTimes.map((time, index) => (<li key={index} className={time.className + " time"}>{time.text}</li>))}
-      </ul>
-    )
-  }
-
-  renderClassName() {
-    const { dateKey, todayKey } = this.state;
-
-    return classNames('dayContainer', { dayViewer_disable: dateKey < todayKey });
-  }
-
-  render() {
-    const { dayOfWeek, date } = this.props;
-
-    return (
-      <div className={this.renderClassName()}>
-        <div className="dateBoard">
-          <div className="dayOfWeek textCenter fontSize-l"><FormattedMessage id={dayOfWeek} /></div>
-          <div className="date textCenter fontSize-l">{date}</div>
-        </div>
-        {
-          this.renderTeacherSchedule()
-        }
+  return (
+    <div className={renderClassName()}>
+      <div className="dateBoard">
+        <div className="dayOfWeek textCenter fontSize-l">{/* <FormattedMessage id={dayOfWeek} /> */}</div>
+        <div className="date textCenter fontSize-l">{date}</div>
       </div>
-    );
-  }
+      {/* {renderTeacherSchedule()} */}
+    </div>
+  );
 }
-
-DayViewer.propTypes = propTypes;
-export default DayViewer;

@@ -2,13 +2,14 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 // import { goNextWeek, goLastWeek, getWeek, getToday } from '../redux/modules/calendar';
 
-import '../style/pages/calendarHeader.scss';
+// import '../style/pages/calendarHeader.scss';
 import classNames from 'classnames';
 import Pagination from 'src/containers/calendar/pagination';
 import { goLastWeek, goNextWeek } from 'src/reducers/calendar';
 import Hint from 'src/containers/calendar/hint';
 
-export default function CalendarHeader(week: any[], today: any) {
+export default function CalendarHeader(props: { week: any[]; today: any }) {
+  const { week, today } = props;
   const dispatch = useDispatch();
 
   const getCurrentWeekRange = () => {

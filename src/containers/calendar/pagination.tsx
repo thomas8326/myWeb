@@ -1,6 +1,5 @@
 import classNames from 'classnames';
 import React from 'react';
-import '../style/components/pagination.scss';
 
 export default function Pagination(props: {
   goLast: () => {};

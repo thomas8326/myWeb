@@ -20,7 +20,7 @@ export function fetchWeek() {
   };
 }
 
-export function goLastWeek(currentWeek: any[]) {
+export function goLastWeek(currentWeek: any[] = []) {
   const myDate = new MyDate();
   const startDateOfWeek = currentWeek[0].fullDate;
   const lastWeek = myDate.getWeek(new MyDate(startDateOfWeek.year, startDateOfWeek.month, startDateOfWeek.date - 7));
@@ -30,7 +30,7 @@ export function goLastWeek(currentWeek: any[]) {
   };
 }
 
-export function goNextWeek(currentWeek: any[]) {
+export function goNextWeek(currentWeek: any[] = []) {
   const myDate = new MyDate();
   const endDateOfWeek = currentWeek[currentWeek.length - 1].fullDate;
   const nextWeek = myDate.getWeek(new MyDate(endDateOfWeek.year, endDateOfWeek.month, endDateOfWeek.date + 1));
