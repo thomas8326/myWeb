@@ -1,13 +1,30 @@
 import React from 'react';
+import MyDate from 'src/models/myDate';
+import styled, { css } from 'styled-components';
 
-import classNames from 'classnames';
+const OneDayColumn = styled.div`
+  display: flex;
+  flex: 1 1;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 5px;
+  border-top: 4px solid var(--primary-color);
+  ${(props: { disabled: boolean }) =>
+    props.disabled &&
+    css`
+      border-color: var(--primary-disable-color);
+    `}
+`;
+
+// import classNames from 'classnames';
 
 // const HALF_OF_HOUR = 30;
 // const ONE_HOUR = 60;
 // const MILITARY_TIME = 24;
 
-export default function DayViewer(props: { dateKey: any; todayKey: any; date: any }) {
-  const { dateKey, todayKey, date } = props;
+export default function DayViewer(props: { date: MyDate; today: MyDate }) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { date, today } = props;
   // const todayAvailableTimes = availableTimes.flatMap((availableTime: any) =>
   //   getTime(availableTime, 'dayContainer-time_available'),
   // );
@@ -64,15 +81,13 @@ export default function DayViewer(props: { dateKey: any; todayKey: any; date: an
   //     ))}
   //   </ul>
   // );
-  const renderClassName = () => classNames('dayContainer', { dayViewer_disable: dateKey < todayKey });
+  // const renderClassName = () => classNames('dayContainer', { dayViewer_disable: key < todayKey });
 
   return (
-    <div className={renderClassName()}>
-      <div className="dateBoard">
-        <div className="dayOfWeek textCenter fontSize-l">{/* <FormattedMessage id={dayOfWeek} /> */}</div>
-        <div className="date textCenter fontSize-l">{date}</div>
-      </div>
+    <OneDayColumn disabled={date.key < today.key}>
+      <div className="dayOfWeek textCenter fontSize-l">{date.dayOfWeek}</div>
+      <div className="date textCenter fontSize-l">{date.date}</div>
       {/* {renderTeacherSchedule()} */}
-    </div>
+    </OneDayColumn>
   );
 }

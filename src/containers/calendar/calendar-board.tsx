@@ -1,37 +1,43 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import CalendarHeader from 'src/containers/calendar/calendar-header';
 // import { useDispatch } from 'react-redux';
 import DayViewer from 'src/containers/calendar/day-viewer';
+import MyDate from 'src/models/myDate';
+import { getWeek } from 'src/utils/date.util';
+import styled from 'styled-components';
+
+const CalendarContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 15px 0;
+`;
 
 export default function Calendar() {
-  const [week] = useState<any[]>([]);
-  const [today] = useState({ key: '123' });
-  // const dispatch = useDispatch();
+  const [week, setWeek] = useState<MyDate[]>(getWeek(new MyDate()));
+  const [today] = useState<MyDate>(new MyDate());
 
-  useEffect(() => {
-    // dispatch(fetchSchedule());
-  }, []);
+  const goLastWeek = () => {
+    const startDateOfWeek = week[0];
+    const date = new Date(startDateOfWeek.year, startDateOfWeek.month - 1, startDateOfWeek.date - 7);
+    setWeek(getWeek(new MyDate(date)));
+  };
 
-  useEffect(() => {
-    // dispatch(fetchWeek());
-  }, []);
+  const goNextWeek = () => {
+    const endDateOfWeek = week[week.length - 1];
+    const date = new Date(endDateOfWeek.year, endDateOfWeek.month - 1, endDateOfWeek.date + 1);
+
+    setWeek(getWeek(new MyDate(date)));
+  };
 
   return (
     <>
-      <CalendarHeader week={week} today={today} />
-      <div className="calendar">
-        {week.map((day: any) => (
-          <DayViewer
-            key={day.fullDate.key}
-            // dayOfWeek={day.dayOfWeek}
-            date={day.fullDate.stringDate}
-            dateKey={day.fullDate.key}
-            todayKey={today.key}
-            // availableTimes={availableTimes.filter((time) => time.start.fullDate.key === day.fullDate.key)}
-            // bookedTimes={bookedTimes.filter((time) => time.start.fullDate.key === day.fullDate.key)}
-          />
+      <CalendarHeader week={week} today={today} goLastWeek={goLastWeek} goNextWeek={goNextWeek} />
+      <CalendarContainer>
+        {week.map((date: MyDate) => (
+          <DayViewer key={date.key} date={date} today={today} />
         ))}
-      </div>
+      </CalendarContainer>
     </>
   );
 }

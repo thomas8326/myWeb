@@ -1,40 +1,36 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 // import { goNextWeek, goLastWeek, getWeek, getToday } from '../redux/modules/calendar';
 
 // import '../style/pages/calendarHeader.scss';
-import classNames from 'classnames';
 import Pagination from 'src/containers/calendar/pagination';
-import { goLastWeek, goNextWeek } from 'src/reducers/calendar';
+// import { goLastWeek, goNextWeek } from 'src/reducers/calendar';
 import Hint from 'src/containers/calendar/hint';
+import MyDate from 'src/models/myDate';
 
-export default function CalendarHeader(props: { week: any[]; today: any }) {
-  const { week, today } = props;
-  const dispatch = useDispatch();
+export default function CalendarHeader(props: {
+  week: MyDate[];
+  today: MyDate;
+  goNextWeek: () => void;
+  goLastWeek: () => void;
+}) {
+  const { week, today, goNextWeek, goLastWeek } = props;
 
   const getCurrentWeekRange = () => {
     if (week.length) {
-      const firstDayOfWeek = week[0];
-      return `${firstDayOfWeek.fullDate.year}/${firstDayOfWeek.fullDate.stringMonth}/${
-        firstDayOfWeek.fullDate.stringDate
-      } - ${week[week.length - 1].fullDate.stringDate}`;
+      const firstDayOfWeek = `${week[0].year}/${week[0].stringMonth}/${week[0].stringDate}`;
+      const lastDayOfWeek = week[week.length - 1].stringDate;
+      return `${firstDayOfWeek} - ${lastDayOfWeek}`;
     }
     return 'Oops, that seems occur an error.';
-  };
-
-  const renderLastWeekClass = () => {
-    if (!week.length) {
-      return '';
-    }
-    return classNames({ lastButton_disabled: week[0].fullDate.key < today.key });
   };
 
   return (
     <div className="calendarHeader">
       <Pagination
-        lastWeekButtonClass={renderLastWeekClass()}
-        goLast={() => dispatch(goLastWeek())}
-        goNext={() => dispatch(goNextWeek())}
+        disabledPrev={week[0].key < today.key}
+        goLast={goLastWeek}
+        goNext={goNextWeek}
         weekRange={getCurrentWeekRange()}
       />
       <Hint />
