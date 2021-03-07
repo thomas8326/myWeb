@@ -1,3 +1,5 @@
+import { CalendarOutlined } from '@ant-design/icons';
+import { Modal } from 'antd';
 import React, { useState } from 'react';
 import CalendarHeader from 'src/containers/calendar/calendar-header';
 // import { useDispatch } from 'react-redux';
@@ -10,12 +12,15 @@ const CalendarContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  max-height: 50vh;
   padding: 15px 0;
+  overflow: auto;
 `;
 
 export default function Calendar() {
   const [week, setWeek] = useState<MyDate[]>(getWeek(new MyDate()));
   const [today] = useState<MyDate>(new MyDate());
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const goLastWeek = () => {
     const startDateOfWeek = week[0];
@@ -33,12 +38,15 @@ export default function Calendar() {
 
   return (
     <>
-      <CalendarHeader week={week} today={today} goLastWeek={goLastWeek} goNextWeek={goNextWeek} />
-      <CalendarContainer>
-        {week.map((date: MyDate) => (
-          <DayViewer key={date.key} date={date} today={today} />
-        ))}
-      </CalendarContainer>
+      <CalendarOutlined onClick={() => setIsModalVisible(true)} style={{ fontSize: '24px' }} />
+      <Modal visible={isModalVisible} onOk={() => setIsModalVisible(false)} onCancel={() => setIsModalVisible(false)}>
+        <CalendarHeader week={week} today={today} goLastWeek={goLastWeek} goNextWeek={goNextWeek} />
+        <CalendarContainer>
+          {week.map((date: MyDate) => (
+            <DayViewer key={date.key} date={date} today={today} />
+          ))}
+        </CalendarContainer>
+      </Modal>
     </>
   );
 }

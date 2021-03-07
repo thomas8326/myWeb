@@ -28,7 +28,11 @@ const CreateNewUserButton = () => {
       <CloseCircleFilled className="primary icon-m L-margin-m" onClick={() => setIsCreateUser(false)} />
     </div>
   ) : (
-    <button type="button" className="flex-row flex-align-center shadow-card" onClick={() => setIsCreateUser(true)}>
+    <button
+      type="button"
+      className="flex-row full-width flex-align-center shadow-card"
+      onClick={() => setIsCreateUser(true)}
+    >
       <PlusCircleFilled className="primary icon-l padding-m" />
       <span>Create New Chatroom</span>
     </button>
