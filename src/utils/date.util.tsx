@@ -25,4 +25,23 @@ export function getWeek(newMyDate?: MyDate): MyDate[] {
   return week;
 }
 
-export default this;
+export function getDateDiff(date: string) {
+  const currentDate = new Date();
+  const thatDate = new Date(date);
+  const yearDiff = currentDate.getFullYear() - thatDate.getFullYear();
+  const monthDiff = currentDate.getMonth() - thatDate.getMonth();
+  const dayDiff = currentDate.getDate() - thatDate.getDate();
+
+  if (yearDiff) {
+    return `Updated ${yearDiff.toString()} ${yearDiff === 1 ? 'year' : 'years'} ago`;
+  }
+  if (monthDiff) {
+    return `Updated ${monthDiff.toString()} ${monthDiff === 1 ? 'month' : 'months'} ago`;
+  }
+
+  if (dayDiff) {
+    return `Updated ${dayDiff.toString()} ${dayDiff === 1 ? 'day' : 'days'} ago`;
+  }
+
+  return '';
+}

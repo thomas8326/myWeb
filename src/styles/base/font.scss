@@ -26,3 +26,7 @@
 .title-6 {
   @include title(10);
 }
+
+.small-text {
+  @include title(10, description);
+}
