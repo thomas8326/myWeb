@@ -6,7 +6,8 @@ export default function GithubRepos() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [page, setPage] = useState<number>(1);
   const [searchName, setSearchName] = useState('facebook');
-  const RepoList = InfiniteScroll<{ searchName: string; page: number }>(GithubRepoList);
+  const updateThePage = (isIntersecting: boolean) => isIntersecting && setPage(page + 1);
+  const RepoList = InfiniteScroll<{ searchName: string; page: number }>(GithubRepoList, updateThePage);
 
   return (
     <>

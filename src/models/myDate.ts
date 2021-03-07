@@ -45,8 +45,6 @@ export default class MyDate {
   }
 
   private generateMinuteOfDay = (startClock: number, startMinute: number): { text: string; value: number }[] => {
-    // eslint-disable-next-line no-debugger
-    debugger;
     let start = { clock: startClock, minute: startMinute };
 
     const dayTimeConverter = (clock: number, minute: number) => {
