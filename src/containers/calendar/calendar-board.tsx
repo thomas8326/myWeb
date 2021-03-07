@@ -20,6 +20,7 @@ export default function Calendar() {
   const goLastWeek = () => {
     const startDateOfWeek = week[0];
     const date = new Date(startDateOfWeek.year, startDateOfWeek.month - 1, startDateOfWeek.date - 7);
+
     setWeek(getWeek(new MyDate(date)));
   };
 
