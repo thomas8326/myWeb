@@ -37,12 +37,13 @@ export default function GithubRepoList(props: InfiniteScrollProps<{ searchName: 
     fetch(`https://api.github.com/search/repositories?q=${searchName}&page=${page}`, {
       headers: {
         access_token: GIT_ACCESS_TOKEN,
+
         scope: 'repo,gist',
         token_type: 'bearer',
       },
     })
       .then((res) => {
-        if (res.ok) {
+        if (res.status === 204) {
           return res.json();
         }
 
