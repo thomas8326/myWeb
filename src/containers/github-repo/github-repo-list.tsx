@@ -48,10 +48,6 @@ export default function GithubRepoList(props: InfiniteScrollProps<{ searchName: 
         },
       })
       .then((response) => {
-        if (response.status !== 204) {
-          return;
-        }
-
         if (isLoadCompleted && !response.data.items.length) {
           isLoadCompleted(true);
           return;
