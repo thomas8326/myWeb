@@ -1,9 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import axios from 'axios';
 import GithubRepo from 'src/models/github-repo';
 import styled from 'styled-components';
 import { StarFilled } from '@ant-design/icons';
 import { getDateDiff } from 'src/utils/date.util';
+import InfiniteScrollProps from 'src/models/infinite-scroll';
+import { GIT_ACCESS_TOKEN } from 'src/constants/constants';
+import { useDispatch, useSelector } from 'react-redux';
+import ReduxStorage from 'src/models/storage';
+import { fetchGetList } from 'src/reducers/github-repo.reducer';
 
 const Repo = styled.div`
   margin: var(--margin-s);
@@ -20,18 +25,28 @@ const RepoUpdateTime = styled.div`
   margin: auto 0 auto auto;
 `;
 
-export default function GithubRepoList(props: { searchName: string; page: number }) {
-  const { searchName, page } = props;
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [repos, setRepos] = useState<GithubRepo[]>([]);
+export default function GithubRepoList(props: InfiniteScrollProps<{ searchName: string; page: number }>) {
+  const { propsData, isLoadCompleted, isFetchingData } = props;
+  const { searchName, page } = propsData;
+  const dispatch = useDispatch();
+  const repos = useSelector((store: ReduxStorage) => store.githubRepos);
 
   const getGitRepo = () => {
+    isFetchingData && isFetchingData(true);
+
     axios
-      .get<GithubRepo[]>(`https://api.github.com/users/${searchName}/repos`, { params: { page, per_page: 10 } })
+      .get<GithubRepo[]>(`https://api.github.com/users/${searchName}/repos`, {
+        params: { page, per_page: 10 },
+        headers: { Authorization: `token ${GIT_ACCESS_TOKEN}` },
+      })
       .then((response) => {
-        const newRepos = [...repos, ...response.data];
-        setRepos(newRepos);
+        if (isLoadCompleted && !response.data.length) {
+          isLoadCompleted(true);
+          return;
+        }
+
+        dispatch(fetchGetList(response.data));
+        isFetchingData && isFetchingData(false);
       });
   };
 
@@ -39,7 +54,9 @@ export default function GithubRepoList(props: { searchName: string; page: number
 
   useEffect(() => {
     getGitRepo();
-  }, [searchName, page]);
+  }, [page]);
+
+  useEffect(() => {}, [searchName]);
 
   const goToGithub = (url: string) => window.open(url);
 

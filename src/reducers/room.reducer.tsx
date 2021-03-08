@@ -61,7 +61,7 @@ const roomReducer = (state: Room[] = [], action: ReduxAction<Room>): Room[] => {
       return action.payload;
     case ADD_ROOM_USER:
     case SET_ROOM_MESSAGE: {
-      const rooms = state.map((room) => (room.id === action.object.id ? action.object : room));
+      const rooms = state.map((room) => (room.id === action?.object?.id ? action.object : room));
       return rooms;
     }
     default:

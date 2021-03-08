@@ -20,8 +20,8 @@ const conversationReducer = (state = initState, action: ReduxAction<Conversation
   switch (action.type) {
     case RECEIVE_MESSAGE: {
       const newConversation = state;
-      Object.keys(action.object).forEach((key) => {
-        newConversation[key] = (newConversation[key] ?? []).concat(action.object[key]);
+      Object.keys(action?.object ?? []).forEach((key) => {
+        newConversation[key] = (newConversation[key] ?? []).concat(action.object ? action.object[key] : []);
       });
 
       return newConversation;
