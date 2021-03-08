@@ -19,7 +19,7 @@ const Repo = styled.li`
 
 const RepoStar = styled.div`
   align-items: center;
-  width: 50px;
+  width: 70px;
   margin: auto 0 auto auto;
 `;
 
