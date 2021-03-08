@@ -12,13 +12,20 @@ export function fetchGetList(list: GithubRepo[]): ReduxAction<GithubRepo> {
     payload: list,
   };
 }
+export function searchNewRepo(key: string): ReduxAction<GithubRepo, string> {
+  return {
+    type: SEARCH_NEW_GIT_REPO,
+    payload: [],
+    object: key,
+  };
+}
 
-const githubRepoReducer = (state = initState, action: ReduxAction<GithubRepo>): GithubRepo[] => {
+const githubRepoReducer = (state = initState, action: ReduxAction<GithubRepo, string>): GithubRepo[] => {
   switch (action.type) {
     case FETCH_LIST:
       return [...state, ...action.payload];
     case SEARCH_NEW_GIT_REPO:
-      return [...action.payload];
+      return [];
     default:
       return state;
   }

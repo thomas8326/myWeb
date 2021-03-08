@@ -1,7 +1,7 @@
-interface ReduxAction<T> {
+interface ReduxAction<T, R = any> {
   type: string;
   payload: T[];
-  object?: T;
+  object?: R;
 }
 
 export default ReduxAction;
