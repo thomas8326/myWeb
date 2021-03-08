@@ -1,6 +1,6 @@
 import { KeyboardEvent } from 'react';
 
-const useEnterKey = (enterFunction: () => void) => (e: KeyboardEvent) => {
+const useEnterKey = (enterFunction: (e?: any) => void) => (e: KeyboardEvent) => {
   if (e.key === 'Enter') {
     enterFunction();
   }
