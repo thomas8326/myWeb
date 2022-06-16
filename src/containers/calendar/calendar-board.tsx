@@ -1,5 +1,4 @@
 import { CalendarOutlined } from '@ant-design/icons';
-import { Modal } from 'antd';
 import React, { useState } from 'react';
 import CalendarHeader from 'src/containers/calendar/calendar-header';
 // import { useDispatch } from 'react-redux';
@@ -39,14 +38,14 @@ export default function Calendar() {
   return (
     <>
       <CalendarOutlined onClick={() => setIsModalVisible(true)} style={{ fontSize: '24px' }} />
-      <Modal visible={isModalVisible} onOk={() => setIsModalVisible(false)} onCancel={() => setIsModalVisible(false)}>
+      {/* <Modal visible={isModalVisible} onOk={() => setIsModalVisible(false)} onCancel={() => setIsModalVisible(false)}>
         <CalendarHeader week={week} today={today} goLastWeek={goLastWeek} goNextWeek={goNextWeek} />
         <CalendarContainer>
           {week.map((date: MyDate) => (
             <DayViewer key={date.key} date={date} today={today} />
           ))}
         </CalendarContainer>
-      </Modal>
+      </Modal> */}
     </>
   );
 }

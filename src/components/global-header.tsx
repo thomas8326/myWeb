@@ -1,7 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import Calendar from 'src/containers/calendar/calendar-board';
-import Message from 'src/containers/message/message';
 import ReduxStorage from 'src/models/storage';
 import styled from 'styled-components';
 
@@ -22,7 +21,6 @@ function GlobalHeader(props: { title: string }) {
         <span className="global-header-title">{title}</span>
         <HeaderButtonGroup className="flex-row flex-align-center">
           <Calendar />
-          <Message userId={myUserInfo.id} />
         </HeaderButtonGroup>
       </header>
     </>

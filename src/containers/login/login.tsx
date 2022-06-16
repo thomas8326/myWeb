@@ -4,7 +4,7 @@
 import axios from 'axios';
 import React, { FormEvent, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import ApiPath from 'src/constants/api.enum';
 import ResponseContent from 'src/models/response-content';
 import UserInfo from 'src/models/user-info';
@@ -14,7 +14,7 @@ function Login() {
   const [userName, setUserName] = useState('');
   const [password, setUserPassword] = useState('');
   const dispatch = useDispatch();
-  const history = useHistory();
+  const history = useNavigate();
 
   const onLogin = () => {
     const userInfo = new UserInfo(userName);
@@ -23,7 +23,7 @@ function Login() {
       dispatch(login(response.data.data));
     });
 
-    history.push('/show-room');
+    history(-1);
   };
 
   return (
