@@ -2,23 +2,29 @@
 import React from 'react';
 import { Provider } from 'react-redux/es/exports';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import MainLayout from 'src/components/main-layout';
 import Showroom from 'src/containers/showroom/showroom';
 import { reduxStorage } from 'src/reducers';
+import { theme } from 'src/styles/base/theme';
+import { ThemeProvider } from 'styled-components';
 import './App.css';
 
 function App() {
-  return (
-    <>
-      <Provider store={reduxStorage}>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Showroom />}></Route>
-            <Route path="/show-room" element={<Showroom />}></Route>
-          </Routes>
-        </BrowserRouter>
-      </Provider>
-    </>
-  );
+    return (
+        <>
+            <Provider store={reduxStorage}>
+                <ThemeProvider theme={theme}>
+                    <BrowserRouter>
+                        <Routes>
+                            <Route path="/" element={<MainLayout />}>
+                                <Route path="/show-room" element={<Showroom />}></Route>
+                            </Route>
+                        </Routes>
+                    </BrowserRouter>
+                </ThemeProvider>
+            </Provider>
+        </>
+    );
 }
 
 export default App;
