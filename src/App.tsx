@@ -1,17 +1,22 @@
 // import Login from 'Containers/login/login';
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
-import Login from 'src/containers/login/login';
+import { Provider } from 'react-redux/es/exports';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Showroom from 'src/containers/showroom/showroom';
+import { reduxStorage } from 'src/reducers';
 import './App.css';
 
 function App() {
   return (
     <>
-      <Routes>
-        <Route path="/" element={<Login />}></Route>
-        <Route path="/show-room" element={<Showroom />}></Route>
-      </Routes>
+      <Provider store={reduxStorage}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Showroom />}></Route>
+            <Route path="/show-room" element={<Showroom />}></Route>
+          </Routes>
+        </BrowserRouter>
+      </Provider>
     </>
   );
 }

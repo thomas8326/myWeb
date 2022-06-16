@@ -7,7 +7,6 @@ import InfiniteScrollProps from 'src/models/infinite-scroll';
 import { useDispatch, useSelector } from 'react-redux';
 import ReduxStorage from 'src/models/storage';
 import { fetchGetList } from 'src/reducers/github-repo.reducer';
-import { StarFilled } from '@ant-design/icons';
 import { GIT_ACCESS_TOKEN } from 'src/constants/constants';
 import axios from 'axios';
 import GithubRepo from 'src/models/github-repo';
@@ -81,7 +80,7 @@ export default function GithubRepoList(props: InfiniteScrollProps<{ searchName: 
               <div className="flex-row">
                 <span className="title-3">{repo.full_name}</span>
                 <RepoStar className="flex-row">
-                  <StarFilled />
+                  <div>StarFill</div>
                   <span className="L-margin-s">{getStartCount(repo.stargazers_count)}</span>
                 </RepoStar>
               </div>

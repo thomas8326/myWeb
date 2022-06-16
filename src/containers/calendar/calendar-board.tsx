@@ -1,4 +1,3 @@
-import { CalendarOutlined } from '@ant-design/icons';
 import React, { useState } from 'react';
 import CalendarHeader from 'src/containers/calendar/calendar-header';
 // import { useDispatch } from 'react-redux';
@@ -37,7 +36,7 @@ export default function Calendar() {
 
   return (
     <>
-      <CalendarOutlined onClick={() => setIsModalVisible(true)} style={{ fontSize: '24px' }} />
+      {/* <CalendarOutlined onClick={() => setIsModalVisible(true)} style={{ fontSize: '24px' }} /> */}
       {/* <Modal visible={isModalVisible} onOk={() => setIsModalVisible(false)} onCancel={() => setIsModalVisible(false)}>
         <CalendarHeader week={week} today={today} goLastWeek={goLastWeek} goNextWeek={goNextWeek} />
         <CalendarContainer>
