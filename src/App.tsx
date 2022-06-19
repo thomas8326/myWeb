@@ -9,6 +9,7 @@ import { reduxStorage } from 'src/reducers';
 import { theme } from 'src/styles/base/theme';
 import { ThemeProvider } from 'styled-components';
 import './App.css';
+import Resume from 'src/pages/resume';
 
 function App() {
     return (
@@ -20,7 +21,9 @@ function App() {
                             <Route path="/" element={<MainPage />}>
                                 <Route path="show-room" element={<Showroom />}></Route>
                             </Route>
-                            <Route path="admin-dashboard" element={<DashBoard />}></Route>
+                            <Route path="admin-dashboard" element={<DashBoard />}>
+                                <Route path="resume" element={<Resume />}></Route>
+                            </Route>
                         </Routes>
                     </BrowserRouter>
                 </ThemeProvider>

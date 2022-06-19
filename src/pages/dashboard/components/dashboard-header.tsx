@@ -1,3 +1,4 @@
+import { NavLink } from 'react-router-dom';
 import { mainFeatures } from 'src/constants/lists';
 import { FullScreenLayout } from 'src/styles/layouts/base-layout';
 import { FlexBetweenLayout, FlexRowLayout } from 'src/styles/layouts/flex-layout';
@@ -44,7 +45,11 @@ function DashboardHeader() {
             <SubHeader>
                 <FlexRowLayout>
                     {mainFeatures.map((feature, index) => (
-                        <FeatureItem key={index}>{feature}</FeatureItem>
+                        <FeatureItem key={index}>
+                            <NavLink style={{ textDecoration: 'none' }} to={feature.url}>
+                                {feature.title}
+                            </NavLink>
+                        </FeatureItem>
                     ))}
                 </FlexRowLayout>
             </SubHeader>
