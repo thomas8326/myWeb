@@ -1,5 +1,7 @@
+import { Trans } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 import { mainFeatures } from 'src/constants/lists';
+import { TransKey } from 'src/enums/translation-key.enum';
 import { FullScreenLayout } from 'src/styles/layouts/base-layout';
 import { FlexBetweenLayout, FlexRowLayout } from 'src/styles/layouts/flex-layout';
 import styled from 'styled-components';
@@ -47,7 +49,7 @@ function DashboardHeader() {
                     {mainFeatures.map((feature, index) => (
                         <FeatureItem key={index}>
                             <NavLink style={{ textDecoration: 'none' }} to={feature.url}>
-                                {feature.title}
+                                <Trans>{feature.title}</Trans>
                             </NavLink>
                         </FeatureItem>
                     ))}
