@@ -4,6 +4,7 @@ import { Provider } from 'react-redux/es/exports';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import MainLayout from 'src/components/main-layout';
 import Showroom from 'src/containers/showroom/showroom';
+import DashBoard from 'src/pages/dashboard';
 import { reduxStorage } from 'src/reducers';
 import { theme } from 'src/styles/base/theme';
 import { ThemeProvider } from 'styled-components';
@@ -17,7 +18,10 @@ function App() {
                     <BrowserRouter>
                         <Routes>
                             <Route path="/" element={<MainLayout />}>
-                                <Route path="/show-room" element={<Showroom />}></Route>
+                                <Route path="show-room" element={<Showroom />}></Route>
+                            </Route>
+                            <Route path="admin">
+                                <Route path="dashboard" element={<DashBoard />}></Route>
                             </Route>
                         </Routes>
                     </BrowserRouter>
