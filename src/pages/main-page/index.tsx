@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import MainSideNav from 'src/components/main-side-nav';
+import MainSideNav from 'src/pages/main-page/components/main-side-nav';
 
 import styled from 'styled-components';
 
@@ -17,7 +17,7 @@ const MainLayoutContainer = styled.div`
     }
 `;
 
-const MainLayout = () => (
+const MainPage = () => (
     <MainLayoutContainer>
         <div className="side-nav">{<MainSideNav />}</div>
         <div className="main-view">
@@ -26,4 +26,4 @@ const MainLayout = () => (
     </MainLayoutContainer>
 );
 
-export default MainLayout;
+export default MainPage;
