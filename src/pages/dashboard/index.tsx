@@ -8,6 +8,7 @@ const Container = styled.div`
 
     .main {
         flex: 1;
+        padding: 15px 20px;
     }
 `;
 
@@ -17,7 +18,7 @@ function DashBoard() {
             <div className="header">
                 <DashboardHeader />
             </div>
-            <div>
+            <div className="main">
                 <Outlet />
             </div>
         </Container>
