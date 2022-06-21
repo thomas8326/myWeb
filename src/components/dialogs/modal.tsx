@@ -13,7 +13,6 @@ const OverlayContainer = styled.div<DialogConfig>`
 `;
 
 const OverlayWrapper = styled.div<DialogConfig>`
-    background: ${(props) => (props.hasBackdrop ? 'rgba(0,0,0,.32)' : 'rgba(0,0,0,0)')};
     width: 100%;
     height: 100%;
     display: flex;
@@ -22,12 +21,23 @@ const OverlayWrapper = styled.div<DialogConfig>`
     z-index: 1000;
 `;
 
+const OverlayBackdrop = styled.div<DialogConfig>`
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    pointer-events: auto;
+    background: ${(props) => (props.hasBackdrop ? 'rgba(0,0,0,.32)' : 'rgba(0,0,0,0)')};
+`;
+
 const OverlayPane = styled.div<DialogConfig>`
     height: auto;
     width: auto;
     position: relative;
     background: white;
-    2px solid transparent;
+    z-index: 1000;
     border-radius: 10px;
     box-shadow: 0px 11px 15px -7px rgb(0 0 0 / 20%), 0px 24px 38px 3px rgb(0 0 0 / 14%),
         0px 9px 46px 8px rgb(0 0 0 / 12%);
@@ -103,17 +113,13 @@ export const DialogFooter = (props: { children: ReactElement | string }) => {
     return <div className="dialog-footer">{props.children}</div>;
 };
 
-const Modal = (props: {
-    modal: ReactElement;
-    config: DialogConfig;
-    setModal: Dispatch<ReactElement | null>;
-    onClose: Dispatch<ReactElement | null>;
-}) => {
-    const { modal, config } = props;
+const Modal = (props: { modal: ReactElement; config: DialogConfig; onClose: (_: any) => void }) => {
+    const { modal, config, onClose } = props;
 
     return (
         <OverlayContainer>
-            <OverlayWrapper {...config}>
+            <OverlayWrapper {...config} onClick={onClose}>
+                <OverlayBackdrop hasBackdrop={config.hasBackdrop} />
                 <OverlayPane>{modal}</OverlayPane>
             </OverlayWrapper>
         </OverlayContainer>
@@ -141,14 +147,7 @@ export const ModalProvider = (props: { children: ReactElement }) => {
     return (
         <ModalContext.Provider value={{ setModal, setConfig, onClose }} {...props}>
             {props.children}
-            {modal && (
-                <Modal
-                    modal={modal}
-                    config={{ ...initDialogConfig, ...config }}
-                    setModal={setModal}
-                    onClose={onClose}
-                ></Modal>
-            )}
+            {modal && <Modal modal={modal} config={{ ...initDialogConfig, ...config }} onClose={onClose}></Modal>}
         </ModalContext.Provider>
     );
 };
