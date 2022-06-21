@@ -118,8 +118,8 @@ const Modal = (props: { modal: ReactElement; config: DialogConfig; onClose: (_: 
 
     return (
         <OverlayContainer>
-            <OverlayWrapper {...config} onClick={onClose}>
-                <OverlayBackdrop hasBackdrop={config.hasBackdrop} />
+            <OverlayWrapper {...config}>
+                <OverlayBackdrop hasBackdrop={config.hasBackdrop} onClick={onClose} />
                 <OverlayPane>{modal}</OverlayPane>
             </OverlayWrapper>
         </OverlayContainer>
