@@ -8,7 +8,7 @@ import { theme } from 'src/styles/base/theme';
 import { ThemeProvider } from 'styled-components';
 import './App.css';
 import Resume from 'src/pages/resume';
-import { ModalProvider } from 'src/components/modal';
+import { ModalProvider } from 'src/components/dialogs/modal';
 
 function App() {
     return (
