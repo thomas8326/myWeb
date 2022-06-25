@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { Dialog, DialogContent, DialogHeader } from 'src/contexts/modal';
 import { FromField } from 'src/components/forms/form-field';
 import { FormSelection } from 'src/components/forms/form-selection';
@@ -17,7 +17,9 @@ function SettingDialog() {
 
     return (
         <Dialog width="300" height="300">
-            <DialogHeader>Setting</DialogHeader>
+            <DialogHeader>
+                <Trans>{TransKey.Setting}</Trans>
+            </DialogHeader>
             <DialogContent>
                 <FromField fieldName={TransKey.Language}>
                     <FormSelection
