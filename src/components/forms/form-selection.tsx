@@ -13,10 +13,10 @@ export const FormInputWrapper = styled.select`
     border-radius: 4px;
 `;
 
-export function FormSelection(props: { options: Option[]; callback: (value: string) => void }) {
-    const { callback, options } = props;
+export function FormSelection(props: { defaultOption: string; options: Option[]; callback: (value: string) => void }) {
+    const { callback, options, defaultOption } = props;
     return (
-        <FormInputWrapper onChange={(e) => callback(e.currentTarget.value)}>
+        <FormInputWrapper defaultValue={defaultOption} onChange={(e) => callback(e.currentTarget.value)}>
             {options.map((option) => (
                 <option key={option.id} value={option.value}>
                     <Trans>{option.text}</Trans>
