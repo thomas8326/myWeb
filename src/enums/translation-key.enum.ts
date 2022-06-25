@@ -4,5 +4,7 @@ export enum TransKey {
     Components = 'components',
     BasicInfo = 'basic info',
     WorkExperience = 'work experience',
-
+    English = 'english',
+    TraditionalChinese = "traditional chinese",
+    Language = 'language',
 }
