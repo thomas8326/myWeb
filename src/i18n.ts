@@ -12,7 +12,7 @@ const i18Init = i18next.use(I18NextHttpBackend).use(LanguageDetector).use(initRe
     },
     debug: true,
     fallbackLng: "en",
-    lng: "en",
+    lng: localStorage.getItem('language') || 'en',
     interpolation: {
         // 是否要讓字詞 escaped 來防止 xss 攻擊，這裡因為 React.js 已經做了，就設成 false即可
         escapeValue: false,
