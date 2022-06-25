@@ -1,6 +1,7 @@
-import { createContext, ReactElement, useState, Dispatch, useCallback } from 'react';
+import React, { createContext, ReactElement, useState, Dispatch, useCallback } from 'react';
 import useModal from 'src/hooks/useModal';
 import { DialogConfig } from 'src/models/dialog';
+import { XMarkButton } from 'src/styles/components/button';
 import styled from 'styled-components';
 
 const OverlayContainer = styled.div<DialogConfig>`
@@ -41,10 +42,6 @@ const OverlayPane = styled.div<DialogConfig>`
     border-radius: 10px;
     box-shadow: 0px 11px 15px -7px rgb(0 0 0 / 20%), 0px 24px 38px 3px rgb(0 0 0 / 14%),
         0px 9px 46px 8px rgb(0 0 0 / 12%);
-
-    .close-button {
-        cursor: pointer;
-    }
 `;
 
 export const Dialog = styled.div<{ width: string; height: string }>`
@@ -98,9 +95,7 @@ export const DialogHeader = (props: { children: ReactElement | string }) => {
     return (
         <div className="dialog-header">
             {props.children}
-            <button className="close-button" onClick={onClose}>
-                X
-            </button>
+            <XMarkButton onClick={onClose} />
         </div>
     );
 };

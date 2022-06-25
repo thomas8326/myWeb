@@ -1,7 +1,10 @@
+import React from 'react';
 import { Trans } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
+import SettingDialog from 'src/components/dialogs/setting-dialog';
 import { mainFeatures } from 'src/constants/lists';
-import { TransKey } from 'src/enums/translation-key.enum';
+import useModal from 'src/hooks/useModal';
+import { SettingButton } from 'src/styles/components/button';
 import { FullScreenLayout } from 'src/styles/layouts/base-layout';
 import { FlexBetweenLayout, FlexRowLayout } from 'src/styles/layouts/flex-layout';
 import styled from 'styled-components';
@@ -36,12 +39,17 @@ const SubHeader = styled.div`
 `;
 
 function DashboardHeader() {
+    const { setModal } = useModal();
+
     return (
         <FullScreenLayout>
             <MainHeader>
                 <FlexBetweenLayout>
                     <div>後臺管理系統</div>
-                    <div>User | 登出</div>
+                    <div>
+                        <SettingButton onClick={() => setModal(<SettingDialog />)}></SettingButton>
+                        User | 登出
+                    </div>
                 </FlexBetweenLayout>
             </MainHeader>
             <SubHeader>
