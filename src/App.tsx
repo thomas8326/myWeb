@@ -1,4 +1,3 @@
-// import Login from 'Containers/login/login';
 import { Suspense } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import MainPage from 'src/pages/main-page';
@@ -10,28 +9,30 @@ import './App.css';
 import Resume from 'src/pages/resume';
 import { ModalProvider } from 'src/contexts/modal';
 import { ClientStorageProvider } from 'src/contexts/client-storage';
+import { Provider } from 'react-redux';
+import { reduxStorage } from 'src/reducers/storage';
 
 function App() {
     return (
         <Suspense>
-            <ClientStorageProvider>
-                {/* <Provider store={reduxStorage}> */}
-                <ThemeProvider theme={theme}>
-                    <ModalProvider>
-                        <BrowserRouter>
-                            <Routes>
-                                <Route path="/" element={<MainPage />}>
-                                    <Route path="show-room" element={<Showroom />}></Route>
-                                </Route>
-                                <Route path="admin-dashboard" element={<DashBoard />}>
-                                    <Route path="resume" element={<Resume />}></Route>
-                                </Route>
-                            </Routes>
-                        </BrowserRouter>
-                    </ModalProvider>
-                </ThemeProvider>
-                {/* </Provider> */}
-            </ClientStorageProvider>
+            <Provider store={reduxStorage}>
+                <ClientStorageProvider>
+                    <ThemeProvider theme={theme}>
+                        <ModalProvider>
+                            <BrowserRouter>
+                                <Routes>
+                                    <Route path="/" element={<MainPage />}>
+                                        <Route path="show-room" element={<Showroom />}></Route>
+                                    </Route>
+                                    <Route path="admin-dashboard" element={<DashBoard />}>
+                                        <Route path="resume" element={<Resume />}></Route>
+                                    </Route>
+                                </Routes>
+                            </BrowserRouter>
+                        </ModalProvider>
+                    </ThemeProvider>
+                </ClientStorageProvider>
+            </Provider>
         </Suspense>
     );
 }
