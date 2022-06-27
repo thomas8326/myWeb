@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { solid, regular, brands } from '@fortawesome/fontawesome-svg-core/import.macro'; // <-- import styles to be used
 
 const Button = styled.button`
+    display: flex;
     box-sizing: border-box;
     position: relative;
     -webkit-user-select: none;
@@ -24,11 +25,11 @@ const Button = styled.button`
     overflow: visible;
 
     &:hover {
-        background: #f7f7f7;
+        filter: brightness(0.8);
     }
 
     &:active {
-        background: #e8e8e8;
+        filter: brightness(0.7);
     }
 `;
 
