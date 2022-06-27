@@ -1,3 +1,4 @@
+import { CssConfig } from 'src/models/css-config';
 import styled from 'styled-components';
 
 export const FlexColumnLayout = styled.div`
@@ -7,11 +8,17 @@ export const FlexColumnLayout = styled.div`
     flex-direction: column;
 `
 
-export const FlexRowLayout = styled.div`
+export const FlexRowLayout = styled.div<CssConfig>`
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: row;
+`
+
+export const FlexRowChildrenMarginLayout = styled(FlexRowLayout) <CssConfig>`
+    & > * + * {
+        margin-left: ${props => props.marginLeft};
+    }
 `
 
 export const FlexBetweenLayout = styled.div`
