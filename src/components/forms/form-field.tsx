@@ -1,30 +1,42 @@
 import { ReactElement } from 'react';
 import { Trans } from 'react-i18next';
+import { CssConfig } from 'src/models/css-config';
 import { LargeText } from 'src/styles/components/font';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-export const Field = styled.div`
+export const Field = styled.div<{ height?: string; minHeight?: string }>`
     text-align: left;
+    height: ${(props) => props?.height || 'inherit'};
+    min-height: ${(props) => props?.minHeight || 'inherit'};
 
-    div + div {
-        margin-top: 8px;
-    }
+    display: flex;
+    flex-direction: column;
 
     .form-control {
-        padding-right: 6px;
+        margin-top: 6px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
     }
 `;
 
-export function FromField(props: { fieldName: string; children: ReactElement | ReactElement[]; required?: boolean }) {
+export function FromField(props: {
+    fieldName: string;
+    children: ReactElement | ReactElement[];
+    required?: boolean;
+    cssConfig?: CssConfig;
+}) {
+    const { fieldName, children, required, cssConfig } = props;
+
     return (
-        <Field className="form-field">
+        <Field className="form-field" height={cssConfig?.height} minHeight={cssConfig?.minHeight}>
             <div>
                 <LargeText>
-                    <Trans>{props.fieldName}</Trans>
+                    <Trans>{fieldName}</Trans>
                 </LargeText>
-                {props.required && <span> *</span>}
+                {required && <span> *</span>}
             </div>
-            <div className="form-control">{props.children}</div>
+            <div className="form-control">{children}</div>
         </Field>
     );
 }

@@ -1,12 +1,12 @@
 import { ReactElement } from 'react';
 import { Trans } from 'react-i18next';
-import { FlexColumnLayout } from 'src/styles/layouts/flex-layout';
 import styled from 'styled-components';
 
 const Container = styled.div`
     position: relative;
     border: 1px solid;
     padding: 15px;
+    margin-bottom: 10px;
 `;
 
 const Title = styled.span`
@@ -16,7 +16,7 @@ const Title = styled.span`
     background: ${(props) => props.theme.background};
 `;
 
-function ResumeFormField(props: { children: ReactElement; title: string }) {
+function ResumeFormSection(props: { children: ReactElement | ReactElement[]; title: string }) {
     return (
         <Container>
             <Title>
@@ -27,4 +27,4 @@ function ResumeFormField(props: { children: ReactElement; title: string }) {
     );
 }
 
-export default ResumeFormField;
+export default ResumeFormSection;
