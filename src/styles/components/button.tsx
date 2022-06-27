@@ -60,6 +60,18 @@ export const SettingButton = (props: any) => (
     </IconButton>
 );
 
+export const PlusButton = (props: any) => (
+    <IconButton {...props}>
+        <FontAwesomeIcon icon={solid('plus')} />
+    </IconButton>
+);
+
+export const MinusButton = (props: any) => (
+    <IconButton {...props}>
+        <FontAwesomeIcon icon={solid('minus')} />
+    </IconButton>
+);
+
 export const XMarkButton = (props: any) => (
     <IconButton {...props}>
         <FontAwesomeIcon icon={solid('xmark')} />
