@@ -4,8 +4,9 @@ import { CssConfig } from 'src/models/css-config';
 import { LargeText } from 'src/styles/components/font';
 import styled, { css } from 'styled-components';
 
-export const Field = styled.div<{ height?: string; minHeight?: string }>`
+export const Field = styled.div<CssConfig>`
     text-align: left;
+
     height: ${(props) => props?.height || 'inherit'};
     min-height: ${(props) => props?.minHeight || 'inherit'};
 
@@ -29,7 +30,7 @@ export function FromField(props: {
     const { fieldName, children, required, cssConfig } = props;
 
     return (
-        <Field className="form-field" height={cssConfig?.height} minHeight={cssConfig?.minHeight}>
+        <Field className="form-field" {...cssConfig}>
             <div>
                 <LargeText>
                     <Trans>{fieldName}</Trans>

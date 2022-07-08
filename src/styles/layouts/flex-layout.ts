@@ -1,11 +1,20 @@
 import { CssConfig } from 'src/models/css-config';
 import styled from 'styled-components';
 
-export const FlexColumnLayout = styled.div`
+export const FlexColumnLayout = styled.div<CssConfig>`
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
+
+    margin-top: ${props => props.marginTop};
+    margin-left: ${props => props.marginLeft};
+    margin-right: ${props => props.marginRight};
+    margin-bottom: ${props => props.marginBottom};
+
+    & > * + * {
+        margin-top: ${props => props.elementsMargin};
+    }
 `
 
 export const FlexRowLayout = styled.div<CssConfig>`
@@ -13,11 +22,14 @@ export const FlexRowLayout = styled.div<CssConfig>`
     height: 100%;
     display: flex;
     flex-direction: row;
-`
 
-export const FlexRowChildrenMarginLayout = styled(FlexRowLayout) <CssConfig>`
+    margin-top: ${props => props.marginTop};
+    margin-left: ${props => props.marginLeft};
+    margin-right: ${props => props.marginRight};
+    margin-bottom: ${props => props.marginBottom};
+
     & > * + * {
-        margin-left: ${props => props.marginLeft};
+        margin-left: ${props => props.elementsMargin};
     }
 `
 

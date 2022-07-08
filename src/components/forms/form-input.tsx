@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 export const FormInputWrapper = styled.input`
-    width: 100%;
-    height: 30px;
+    height: 100%;
+    flex: 1;
     padding: 0 6px;
 
     background: #ffffff;

@@ -8,5 +8,7 @@ export enum TransKey {
     TraditionalChinese = "traditional chinese",
     Language = 'language',
     Dashboard = 'dashboard',
-    Setting = "setting"
+    Setting = "setting",
+    AboutMe = 'about me',
+    Update = 'update'
 }
