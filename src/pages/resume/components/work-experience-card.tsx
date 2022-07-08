@@ -16,7 +16,7 @@ const Container = styled.div`
     }
 `;
 
-function ResumeCard(props: { children: ReactElement | ReactElement[] }) {
+function WorkExperienceCard(props: { children: ReactElement | ReactElement[] }) {
     const { children } = props;
 
     return (
@@ -30,4 +30,4 @@ function ResumeCard(props: { children: ReactElement | ReactElement[] }) {
     );
 }
 
-export default ResumeCard;
+export default WorkExperienceCard;

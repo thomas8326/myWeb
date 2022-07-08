@@ -12,9 +12,8 @@ import { RaisedButton } from 'src/styles/components/button';
 import styled from 'styled-components';
 import { FormInput } from 'src/components/forms/form-input';
 import { FlexColumnLayout, FlexRowLayout } from 'src/styles/layouts/flex-layout';
-import ResumeCard from 'src/pages/resume/components/resume-card';
+import WorkExperienceCard from 'src/pages/resume/components/work-experience-card';
 import { HorizontalLine } from 'src/styles/components/line';
-import { RowMarginLayout } from 'src/styles/layouts/base-layout';
 
 const ResumeContainer = styled.div`
     .btn-group {
@@ -57,7 +56,7 @@ function Resume() {
                 </div>
             </ResumeFormSection>
             <ResumeFormSection title={TransKey.WorkExperience}>
-                <ResumeCard>
+                <WorkExperienceCard>
                     <FlexRowLayout elementsMargin="8px" marginBottom="10px">
                         <FromField fieldName="Company Name" cssConfig={{ height: `${60}px` }}>
                             <FormInput name="companyName" callback={() => {}}></FormInput>
@@ -87,7 +86,7 @@ function Resume() {
                             <RaisedButton onClick={updateBasicInfo}>add project</RaisedButton>
                         </div>
                     </FlexColumnLayout>
-                </ResumeCard>
+                </WorkExperienceCard>
                 <div className="btn-group">
                     <RaisedButton onClick={updateBasicInfo}>delete Experience</RaisedButton>
                     <RaisedButton onClick={updateBasicInfo}>add Experience</RaisedButton>
