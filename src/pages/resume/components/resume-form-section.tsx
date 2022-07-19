@@ -1,5 +1,7 @@
-import { ReactElement } from 'react';
+import { ReactElement, useState } from 'react';
 import { Trans } from 'react-i18next';
+import { Tag } from 'src/components/tag/tag';
+import { FlexRowLayout } from 'src/styles/layouts/flex-layout';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -16,14 +18,40 @@ const Title = styled.span`
     background: ${(props) => props.theme.background};
 `;
 
-function ResumeFormSection(props: { children: ReactElement | ReactElement[]; title: string }) {
+const ChildWrapper = styled.div<{ active: boolean }>`
+    display: ${(props) => (props.active ? 'block' : 'none')};
+`;
+
+const TagLayoutContainer = styled.div`
+    position: relative;
+`;
+
+const TagGroup = styled.div`
+    display: flex;
+    justify-content: flex-end;
+`;
+
+function ResumeFormSection(props: { chinese: ReactElement; english: ReactElement; title: string }) {
+    const [lngTemplate, setLngTemplate] = useState<'chinese' | 'english'>('chinese');
+
     return (
-        <Container>
-            <Title>
-                <Trans>{props.title}</Trans>
-            </Title>
-            <div>{props.children}</div>
-        </Container>
+        <TagLayoutContainer>
+            <TagGroup>
+                <Tag active={lngTemplate === 'chinese'} onClick={() => setLngTemplate('chinese')}>
+                    中文
+                </Tag>
+                <Tag active={lngTemplate === 'english'} onClick={() => setLngTemplate('english')}>
+                    English
+                </Tag>
+            </TagGroup>
+            <Container>
+                <Title>
+                    <Trans>{props.title}</Trans>
+                </Title>
+                <ChildWrapper active={lngTemplate === 'chinese'}>{props.chinese}</ChildWrapper>
+                <ChildWrapper active={lngTemplate === 'english'}>{props.english}</ChildWrapper>
+            </Container>
+        </TagLayoutContainer>
     );
 }
 
