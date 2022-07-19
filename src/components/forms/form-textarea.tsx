@@ -11,11 +11,18 @@ export const FormTextareaWrapper = styled.textarea`
     border-radius: 4px;
 `;
 
-export function FormTextarea(props: { name: string; callback: (e: { name: string; value: any }) => void }) {
-    const { callback, name } = props;
+export interface FormTextareaType {
+    name: string;
+    value?: string;
+    callback: (e: { name: string; value: string }) => void;
+}
+
+export function FormTextarea(props: FormTextareaType) {
+    const { callback, value, name } = props;
     return (
         <FormTextareaWrapper
             name={name}
+            defaultValue={value}
             onInput={(e) => callback({ name: e.currentTarget.name, value: e.currentTarget.value })}
         ></FormTextareaWrapper>
     );
