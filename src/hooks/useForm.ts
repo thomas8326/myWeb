@@ -2,9 +2,9 @@
 import { useState } from "react";
 import { FromControl } from "src/models/form";
 
-export function useForm(initialState: { [key: string]: FromControl<any> } = {}) {
+export function useForm<T extends {}>(initialState: { [key: string]: FromControl<any> } = {}) {
     const [controls, setControls] = useState(initialState);
-    const [values, setValues] = useState<object>();
+    const [values, setValues] = useState<T | null>(null);
     const [isValid, setValid] = useState(false);
     const [isDirty, setIsDirty] = useState(false);
 
@@ -28,7 +28,7 @@ export function useForm(initialState: { [key: string]: FromControl<any> } = {}) 
         currentValue[controlName].setDirty();
         const { isValid } = validate(currentValue);
         const newControls = { ...controls, [controlName]: currentValue[controlName] };
-        let newValues = {}
+        let newValues: T = {} as T;
         for (const [key, control] of Object.entries(newControls)) {
             newValues = { ...newValues, [key]: control.getValue() };
         }

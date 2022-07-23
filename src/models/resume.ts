@@ -1,9 +1,29 @@
 import { v4 as uuidv4 } from 'uuid';
 
+export enum LanguageType {
+    Chinese = 'chinese',
+    English = 'english'
+}
+
 export interface Resume {
-    id: string;
-    basicInfo: string;
-    workExperience: WorkExperience[];
+    [LanguageType.Chinese]?: ResumeDetail;
+    [LanguageType.English]?: ResumeDetail;
+}
+
+export class ResumeDetail {
+    basicInfo: BasicInfo;
+    workExperiences: WorkExperience[];
+
+    constructor() {
+        this.basicInfo = {
+            aboutMe: ''
+        }
+        this.workExperiences = [];
+    }
+}
+
+export interface BasicInfo {
+    aboutMe: string;
 }
 
 export class WorkExperience {
