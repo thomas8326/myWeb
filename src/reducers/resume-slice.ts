@@ -1,14 +1,24 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { http } from "src/http/http";
 import { DataResponse } from "src/models/http";
-import { BasicInfo, LanguageType, Resume, ResumeDetail, WorkExperience } from "src/models/resume";
+import { BasicInfo, LanguageType, Resume, WorkExperience } from "src/models/resume";
 
 const initState: DataResponse<Resume | null> = {
     status: 'init',
     loading: false,
     data: {
-        [LanguageType.Chinese]: new ResumeDetail(),
-        [LanguageType.English]: new ResumeDetail()
+        [LanguageType.Chinese]: {
+            basicInfo: {
+                aboutMe: ''
+            },
+            workExperiences: []
+        },
+        [LanguageType.English]: {
+            basicInfo: {
+                aboutMe: ''
+            },
+            workExperiences: []
+        }
     },
     error: '',
 };
@@ -20,22 +30,25 @@ const resumeSlice = createSlice({
     },
     extraReducers(builder) {
         builder
-            .addCase(getResume.pending, (state) => {
-                state.status = 'pending';
-                state.loading = true;
-            })
+            // .addCase(getResume.pending, (state) => {
+            //     state.status = 'pending';
+            //     state.loading = true;
+            // })
             .addCase(getResume.fulfilled, (state, action: PayloadAction<Resume>) => {
                 state.status = 'succeeded';
                 state.loading = false;
                 state.data = action.payload;
-                console.log(state.data);
             })
-        // .addCase(updateBasicInfo.fulfilled, (state, action: PayloadAction<BasicInfo>) => {
-        //     // state.status = 'succeeded';
-        //     console.log(state.data);
-        //     console.log(action.payload);
-        //     // state.data = action.payload
-        // })
+            .addCase(updateChineseBasicInfo.fulfilled, (state, action: PayloadAction<BasicInfo>) => {
+                if (state?.data && state.data[LanguageType.Chinese]) {
+                    state.data[LanguageType.Chinese]!.basicInfo = action.payload;
+                }
+            })
+            .addCase(updateEnglishBasicInfo.fulfilled, (state, action: PayloadAction<BasicInfo>) => {
+                if (state?.data && state.data[LanguageType.English]) {
+                    state.data[LanguageType.English]!.basicInfo = action.payload;
+                }
+            })
     },
 });
 
@@ -49,8 +62,13 @@ export const getResume = createAsyncThunk('get/resume', async () => {
     return response
 });
 
-export const updateBasicInfo = createAsyncThunk('update/basicInfo', async (body: { lng: LanguageType, data: BasicInfo }) => {
-    const response = await http.post(`resume/${body.lng}/basicInfo`, body.data);
+export const updateChineseBasicInfo = createAsyncThunk('update/chinese/basicInfo', async (body: BasicInfo) => {
+    const response = await http.post<BasicInfo>(`resume/${LanguageType.Chinese}/basicInfo`, body);
+    return response;
+});
+
+export const updateEnglishBasicInfo = createAsyncThunk('update/english/basicInfo', async (body: BasicInfo) => {
+    const response = await http.post<BasicInfo>(`resume/${LanguageType.English}/basicInfo`, body);
     return response;
 });
 

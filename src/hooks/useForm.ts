@@ -8,6 +8,17 @@ export function useForm<T extends {}>(initialState: { [key: string]: FromControl
     const [isValid, setValid] = useState(false);
     const [isDirty, setIsDirty] = useState(false);
 
+    const fetchValues = (values: T) => {
+        let newControls = {};
+        let newValues: T = {} as T;
+        for (const [key, value] of Object.entries(values)) {
+            newControls = { ...newControls, [key]: new FromControl(value) };
+            newValues = { ...newValues, [key]: value };
+        }
+        setControls(newControls);
+        setValues(newValues);
+    }
+
     const validate = (values: { [key: string]: FromControl<any> }) => {
         const error = Object.values(values).filter(value => {
             value.validations.forEach(validator => {
@@ -36,7 +47,7 @@ export function useForm<T extends {}>(initialState: { [key: string]: FromControl
         setValues(newValues);
         setValid(isValid);
     };
-    return { controls, values, changeHandler, isValid };
+    return { controls, values, changeHandler, fetchValues, isValid };
 }
 
 export const validatorRequired = (value: string) => {

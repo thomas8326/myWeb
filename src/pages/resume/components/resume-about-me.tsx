@@ -5,9 +5,9 @@ import { useForm } from 'src/hooks/useForm';
 import { RaisedButton } from 'src/styles/components/button';
 import { FormControl } from 'src/models/form-control';
 import { useAppDispatch } from 'src/reducers/storage';
-import { updateBasicInfo } from 'src/reducers/resume-slice';
 import { BasicInfo, LanguageType } from 'src/models/resume';
 import { useEffect } from 'react';
+import { updateChineseBasicInfo, updateEnglishBasicInfo } from 'src/reducers/resume-slice';
 
 interface BasicInfoProps {
     lng: LanguageType;
@@ -15,19 +15,28 @@ interface BasicInfoProps {
 }
 
 function BasicInfoForm(props: BasicInfoProps) {
-    const dispatch = useAppDispatch();
     const { basicInfo } = props;
-    const { controls, values, changeHandler } = useForm<BasicInfo>({
+    const dispatch = useAppDispatch();
+    const { controls, values, fetchValues, changeHandler } = useForm<BasicInfo>({
         aboutMe: new FormControl(basicInfo?.aboutMe || ''),
     });
 
+    useEffect(() => {
+        if (basicInfo) {
+            fetchValues(basicInfo);
+        }
+    }, [basicInfo]);
+
     const onUpdateBasicInfo = () => {
         if (values) {
-            dispatch(updateBasicInfo({ lng: props.lng, data: values }));
+            const callback =
+                props.lng === LanguageType.Chinese
+                    ? () => updateChineseBasicInfo(values)
+                    : () => updateEnglishBasicInfo(values);
+
+            dispatch(callback());
         }
     };
-
-    useEffect(() => {}, []);
 
     return (
         <>

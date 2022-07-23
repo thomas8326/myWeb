@@ -6,7 +6,7 @@ export function http<T extends { id?: string }>() {
         return new Promise<U>((resolve, reject) => {
             apiGet(ref(realtimeDB, path)).then((snapshot) => {
                 if (snapshot.exists()) {
-                    resolve(snapshot.val())
+                    resolve(JSON.parse(JSON.stringify(snapshot.val())));
                 } else {
                     reject('No data available');
                 }

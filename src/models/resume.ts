@@ -10,16 +10,9 @@ export interface Resume {
     [LanguageType.English]?: ResumeDetail;
 }
 
-export class ResumeDetail {
+export interface ResumeDetail {
     basicInfo: BasicInfo;
     workExperiences: WorkExperience[];
-
-    constructor() {
-        this.basicInfo = {
-            aboutMe: ''
-        }
-        this.workExperiences = [];
-    }
 }
 
 export interface BasicInfo {
