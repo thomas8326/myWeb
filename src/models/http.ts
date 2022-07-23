@@ -12,5 +12,6 @@ export interface HttpResponse {
 export interface DataResponse<T> {
     status: string;
     error: string;
+    loading: boolean;
     data: T;
 }

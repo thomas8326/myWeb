@@ -1,15 +1,22 @@
-import { useRef, useState } from 'react';
-import { ref, getDatabase, child, set, push } from 'firebase/database';
-import { firebaseApp } from 'src/firebase/config';
+import { push, ref, set, get as apiGet } from 'firebase/database';
+import { realtimeDB } from 'src/firebase/config';
 
 export function http<T extends { id?: string }>() {
-    const realtimeDB = getDatabase(firebaseApp);
+    const get = async <U extends T>(path: string) => {
+        return new Promise<U>((resolve, reject) => {
+            apiGet(ref(realtimeDB, path)).then((snapshot) => {
+                if (snapshot.exists()) {
+                    resolve(snapshot.val())
+                } else {
+                    reject('No data available');
+                }
+            })
+        });
+    }
 
     const post = async <U extends T>(object: U, path: string) => {
         return new Promise<U>((resolve) => {
-            debugger;
-            console.log(object);
-            set(ref(realtimeDB, path), object).then(() => { debugger; console.log(object); resolve(object) }).catch(e => console.log(e));
+            set(ref(realtimeDB, path), object).then(() => { resolve(object) }).catch(e => console.log(e));
         });
     };
 
@@ -19,13 +26,17 @@ export function http<T extends { id?: string }>() {
         });
     };
 
-    return { post, add };
+    return { get, post, add };
 }
 
-http.post = function (endpoint: string, body?: any) {
-    return http().post(body, endpoint);
+http.post = <T>(endpoint: string, body?: any) => {
+    return http().post<T>(body, endpoint);
 };
 
-http.add = function (endpoint: string, body?: any) {
-    return http().add(body, endpoint);
+http.add = <T>(endpoint: string, body?: any) => {
+    return http().add<T>(body, endpoint);
+};
+
+http.get = <T>(endpoint: string) => {
+    return http().get<T>(endpoint);
 };
