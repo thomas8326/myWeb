@@ -21,20 +21,21 @@ export const Field = styled.div<CssConfig>`
     }
 `;
 
-export function FromField(props: {
+interface FromFieldProps {
     fieldName: string;
     children: ReactElement | ReactElement[];
+    isTranslate?: boolean;
     required?: boolean;
     cssConfig?: CssConfig;
-}) {
-    const { fieldName, children, required, cssConfig } = props;
+}
+
+export function FromField(props: FromFieldProps = { fieldName: '', children: [], isTranslate: true }) {
+    const { fieldName, children, required, cssConfig, isTranslate } = props;
 
     return (
         <Field className="form-field" {...cssConfig}>
             <div>
-                <LargeText>
-                    <Trans>{fieldName}</Trans>
-                </LargeText>
+                <LargeText>{isTranslate ? <Trans>{fieldName}</Trans> : <span>{fieldName}</span>}</LargeText>
                 {required && <span> *</span>}
             </div>
             <div className="form-control">{children}</div>
