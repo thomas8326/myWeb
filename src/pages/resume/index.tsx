@@ -46,18 +46,8 @@ function Resume() {
         <ResumeContainer>
             <ResumeFormSection
                 title={TransKey.BasicInfo}
-                chinese={
-                    <BasicInfoForm
-                        lng={LanguageType.Chinese}
-                        basicInfo={data?.[LanguageType.Chinese]?.basicInfo}
-                    ></BasicInfoForm>
-                }
-                english={
-                    <BasicInfoForm
-                        lng={LanguageType.English}
-                        basicInfo={data?.[LanguageType.English]?.basicInfo}
-                    ></BasicInfoForm>
-                }
+                chinese={<BasicInfoForm basicInfo={data?.[LanguageType.Chinese]?.basicInfo}></BasicInfoForm>}
+                english={<BasicInfoForm basicInfo={data?.[LanguageType.English]?.basicInfo}></BasicInfoForm>}
             ></ResumeFormSection>
 
             <ResumeFormSection

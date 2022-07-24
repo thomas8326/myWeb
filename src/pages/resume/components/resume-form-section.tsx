@@ -1,6 +1,8 @@
+import { cloneElement } from 'react';
 import { ReactElement, useState } from 'react';
 import { Trans } from 'react-i18next';
 import { Tag } from 'src/components/tag/tag';
+import { LanguageType } from 'src/models/resume';
 import { FlexRowLayout } from 'src/styles/layouts/flex-layout';
 import styled from 'styled-components';
 
@@ -48,8 +50,12 @@ function ResumeFormSection(props: { chinese: ReactElement; english: ReactElement
                 <Title>
                     <Trans>{props.title}</Trans>
                 </Title>
-                <ChildWrapper active={lngTemplate === 'chinese'}>{props.chinese}</ChildWrapper>
-                <ChildWrapper active={lngTemplate === 'english'}>{props.english}</ChildWrapper>
+                <ChildWrapper active={lngTemplate === 'chinese'}>
+                    {cloneElement(props.chinese, { lng: LanguageType.Chinese })}
+                </ChildWrapper>
+                <ChildWrapper active={lngTemplate === 'english'}>
+                    {cloneElement(props.english, { lng: LanguageType.English })}
+                </ChildWrapper>
             </Container>
         </TagLayoutContainer>
     );

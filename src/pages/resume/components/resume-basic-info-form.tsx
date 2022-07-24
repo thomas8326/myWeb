@@ -1,6 +1,5 @@
 import { FromField } from 'src/components/forms/form-field';
 import { FormTextarea } from 'src/components/forms/form-textarea';
-import { TransKey } from 'src/enums/translation-key.enum';
 import { useForm } from 'src/hooks/useForm';
 import { RaisedButton } from 'src/styles/components/button';
 import { FormControl } from 'src/models/form-control';
@@ -10,7 +9,7 @@ import { useEffect, useState } from 'react';
 import { updateChineseBasicInfo, updateEnglishBasicInfo } from 'src/reducers/resume-slice';
 
 interface BasicInfoProps {
-    lng: LanguageType;
+    lng?: LanguageType;
     basicInfo: BasicInfo | undefined;
 }
 
