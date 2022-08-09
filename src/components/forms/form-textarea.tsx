@@ -1,3 +1,5 @@
+import { InputHTMLAttributes } from 'react';
+import { FormCallback } from 'src/models/form';
 import styled from 'styled-components';
 
 export const FormTextareaWrapper = styled.textarea`
@@ -11,19 +13,18 @@ export const FormTextareaWrapper = styled.textarea`
     border-radius: 4px;
 `;
 
-export interface FormTextareaType {
+export interface FormTextareaType extends InputHTMLAttributes<HTMLTextAreaElement> {
     name: string;
+    idx?: number;
     value?: string;
-    callback: (e: { name: string; value: string }) => void;
+    callback: (e: FormCallback) => void;
 }
 
-export function FormTextarea(props: FormTextareaType) {
-    const { callback, value, name } = props;
+export function FormTextarea({ callback, idx, ...props }: FormTextareaType) {
     return (
         <FormTextareaWrapper
-            name={name}
-            defaultValue={value}
-            onInput={(e) => callback({ name: e.currentTarget.name, value: e.currentTarget.value })}
+            {...props}
+            onInput={(e) => callback({ name: e.currentTarget.name, value: e.currentTarget.value, index: idx || 0 })}
         ></FormTextareaWrapper>
     );
 }

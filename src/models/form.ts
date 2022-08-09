@@ -1,21 +1,46 @@
-export class FromControl<T> {
-    value: T;
+export class AbstractControl {
+    [key: string]: FormControl<any>
+}
+
+export interface FormCallback {
+    name: string;
+    value: string;
+    index?: number
+};
+export class FormGroup {
+    controls: AbstractControl;
+
+    constructor(value: AbstractControl) {
+        this.controls = value;
+    }
+}
+
+export class FormArray {
+    controls: AbstractControl[] = [];
+
+    constructor(value: AbstractControl) {
+        this.controls.push(value);
+    }
+}
+
+export class FormControl<T> {
+    controls: T;
     validations: { (value: string): { name: string; valid: boolean } }[];
     error: { [key: string]: boolean } = {};
     valid: boolean = false;
     isDirty: boolean = false;
 
     constructor(value: T, validations?: { (value: any): { name: string; valid: boolean } }[]) {
-        this.value = value;
+        this.controls = value;
         this.validations = validations || [];
     }
 
     setValue(value: T) {
-        this.value = value;
+        this.controls = value;
     }
 
     getValue() {
-        return this.value;
+        return this.controls;
     }
 
     setError(name: string, isError: boolean) {

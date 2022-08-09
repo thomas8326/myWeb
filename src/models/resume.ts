@@ -24,14 +24,14 @@ export class WorkExperience {
     companyName: string;
     startDate: Date;
     endDate?: Date;
-    project: CompanyProject[];
+    projects: CompanyProject[];
 
     constructor(data?: { companyName: string }) {
         this.id = uuidv4();
         this.companyName = data?.companyName || '';
         this.startDate = new Date();
         this.endDate = new Date();
-        this.project = [];
+        this.projects = [];
     }
 }
 

@@ -1,8 +1,12 @@
-import { ReactElement, useState } from 'react';
+import { uuidv4 } from '@firebase/util';
+import { useEffect } from 'react';
+import { Fragment, ReactElement, useState } from 'react';
 import { FromField } from 'src/components/forms/form-field';
 import { FormInput } from 'src/components/forms/form-input';
 import { FormTextarea } from 'src/components/forms/form-textarea';
-import { LanguageType } from 'src/models/resume';
+import { useFormArray, useFormGroup } from 'src/hooks/useForm';
+import { AbstractControl, FormArray, FormControl, FormGroup } from 'src/models/form';
+import { LanguageType, WorkExperience } from 'src/models/resume';
 import { MinusButton, PlusButton, RaisedButton } from 'src/styles/components/button';
 import { HorizontalLine } from 'src/styles/components/line';
 import { FlexRowLayout, FlexColumnLayout } from 'src/styles/layouts/flex-layout';
@@ -66,52 +70,103 @@ const ENGLISH_WORDING = {
 
 interface WorkExperienceProps {
     lng?: LanguageType;
+    workExperience?: WorkExperience;
 }
 
 function WorkExperienceForm(props: WorkExperienceProps) {
-    const { lng } = props;
+    const { lng, workExperience } = props;
 
     const [rowText] = useState(lng === LanguageType.Chinese ? CHINESE_WORDING : ENGLISH_WORDING);
 
-    const updateBasicInfo = () => {};
+    const { controls, values, changeHandler } = useFormGroup(
+        new FormGroup({
+            companyName: new FormControl(''),
+            position: new FormControl(''),
+            startDate: new FormControl(''),
+            endDate: new FormControl(''),
+        }),
+    );
+    const {
+        controls: projectControls,
+        handler: projectHandler,
+        values: projectValues,
+        add,
+        remove,
+    } = useFormArray(
+        new FormArray({
+            id: new FormControl(uuidv4()),
+            projectName: new FormControl(''),
+            projectDetail: new FormControl(''),
+        }),
+    );
+
+    useEffect(() => {}, [workExperience]);
+
+    const onUpdate = () => {
+        console.log(projectValues);
+    };
 
     return (
         <>
             <WorkExperienceCard>
                 <FlexRowLayout elementsMargin="8px" marginBottom="10px">
                     <FromField fieldName={rowText.CompanyName} cssConfig={{ height: `${60}px` }}>
-                        <FormInput name="companyName" callback={() => {}}></FormInput>
+                        <FormInput name="companyName" callback={changeHandler}></FormInput>
                     </FromField>
                     <FromField fieldName={rowText.Position} cssConfig={{ height: `${60}px` }}>
-                        <FormInput name="companyName" callback={() => {}}></FormInput>
+                        <FormInput name="position" callback={changeHandler}></FormInput>
                     </FromField>
                 </FlexRowLayout>
                 <FlexRowLayout elementsMargin="8px">
                     <FromField fieldName={rowText.StartDate} cssConfig={{ height: `${60}px` }}>
-                        <FormInput name="companyName" callback={() => {}}></FormInput>
+                        <FormInput name="startDate" callback={changeHandler}></FormInput>
                     </FromField>
                     <FromField fieldName={rowText.EndDate} cssConfig={{ height: `${60}px` }}>
-                        <FormInput name="companyName" callback={() => {}}></FormInput>
+                        <FormInput name="endDate" callback={changeHandler}></FormInput>
                     </FromField>
                 </FlexRowLayout>
                 <HorizontalLine />
                 <FlexColumnLayout elementsMargin="8px">
-                    <FromField fieldName={rowText.ProjectName} cssConfig={{ height: `${60}px` }}>
-                        <FormInput name="companyName" callback={() => {}}></FormInput>
-                    </FromField>
-                    <FromField fieldName={rowText.ProjectDetail} cssConfig={{ minHeight: `${140}px` }}>
-                        <FormTextarea name="basicInfo" callback={() => {}}></FormTextarea>
-                    </FromField>
-                    <div className="btn-group">
-                        <RaisedButton onClick={updateBasicInfo}>{rowText.DeleteProject}</RaisedButton>
-                        <RaisedButton onClick={updateBasicInfo}>{rowText.AddProject}</RaisedButton>
-                    </div>
+                    {projectControls.map((control: AbstractControl, idx) => (
+                        <Fragment key={control['id'].getValue()}>
+                            <FromField fieldName={rowText.ProjectName} cssConfig={{ height: `${60}px` }}>
+                                <FormInput
+                                    idx={idx}
+                                    name="projectName"
+                                    callback={projectHandler}
+                                    defaultValue={control['projectName'].getValue()}
+                                ></FormInput>
+                            </FromField>
+                            <FromField fieldName={rowText.ProjectDetail} cssConfig={{ minHeight: `${140}px` }}>
+                                <FormTextarea
+                                    idx={idx}
+                                    name="projectDetail"
+                                    callback={projectHandler}
+                                    defaultValue={control['projectDetail'].getValue()}
+                                ></FormTextarea>
+                            </FromField>
+                            <div className="btn-group">
+                                <RaisedButton onClick={() => remove(idx)}>{rowText.DeleteProject}</RaisedButton>
+                            </div>
+                        </Fragment>
+                    ))}
                 </FlexColumnLayout>
             </WorkExperienceCard>
             <div className="btn-group">
-                <RaisedButton onClick={updateBasicInfo}>{rowText.DeleteExperience}</RaisedButton>
-                <RaisedButton onClick={updateBasicInfo}>{rowText.AddExperience}</RaisedButton>
-                <RaisedButton onClick={updateBasicInfo}>{rowText.Update}</RaisedButton>
+                <RaisedButton
+                    onClick={() =>
+                        add(
+                            new FormArray({
+                                id: new FormControl(uuidv4()),
+                                projectName: new FormControl(''),
+                                projectDetail: new FormControl(''),
+                            }),
+                        )
+                    }
+                >
+                    {rowText.AddProject}
+                </RaisedButton>
+                <RaisedButton onClick={onUpdate}>{rowText.Update}</RaisedButton>
             </div>
         </>
     );

@@ -1,8 +1,8 @@
 import { FromField } from 'src/components/forms/form-field';
 import { FormTextarea } from 'src/components/forms/form-textarea';
-import { useForm } from 'src/hooks/useForm';
+import { useFormGroup } from 'src/hooks/useForm';
 import { RaisedButton } from 'src/styles/components/button';
-import { FormControl } from 'src/models/form-control';
+import { FormControl, FormGroup } from 'src/models/form';
 import { useAppDispatch } from 'src/reducers/storage';
 import { BasicInfo, LanguageType } from 'src/models/resume';
 import { useEffect, useState } from 'react';
@@ -26,9 +26,11 @@ const ENGLISH_WORDING = {
 function BasicInfoForm(props: BasicInfoProps) {
     const { basicInfo, lng } = props;
     const dispatch = useAppDispatch();
-    const { controls, values, fetchValues, changeHandler } = useForm<BasicInfo>({
-        aboutMe: new FormControl(basicInfo?.aboutMe || ''),
-    });
+    const { controls, values, fetchValues, changeHandler } = useFormGroup<BasicInfo>(
+        new FormGroup({
+            aboutMe: new FormControl(''),
+        }),
+    );
     const [rowText] = useState(lng === LanguageType.Chinese ? CHINESE_WORDING : ENGLISH_WORDING);
 
     useEffect(() => {
@@ -51,7 +53,11 @@ function BasicInfoForm(props: BasicInfoProps) {
     return (
         <>
             <FromField fieldName={rowText.AboutMe} cssConfig={{ minHeight: `${140}px` }} isTranslate={false}>
-                <FormTextarea name="aboutMe" value={controls['aboutMe'].value} callback={changeHandler}></FormTextarea>
+                <FormTextarea
+                    name="aboutMe"
+                    value={controls['aboutMe'].controls}
+                    callback={changeHandler}
+                ></FormTextarea>
             </FromField>
             <div className="btn-group">
                 <RaisedButton onClick={onUpdateBasicInfo}>{rowText.Update}</RaisedButton>

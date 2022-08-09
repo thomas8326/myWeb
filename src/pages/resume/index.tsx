@@ -3,8 +3,8 @@ import ResumeFormSection from 'src/pages/resume/components/resume-form-section';
 import { useAppDispatch } from 'src/reducers/storage';
 import { addNewWorkExperience, getResume } from 'src/reducers/resume-slice';
 import { LanguageType } from 'src/models/resume';
-import { useForm } from 'src/hooks/useForm';
-import { FromControl } from 'src/models/form';
+import { useFormGroup } from 'src/hooks/useForm';
+import { FormControl } from 'src/models/form';
 import styled from 'styled-components';
 import BasicInfoForm from 'src/pages/resume/components/resume-basic-info-form';
 import { useEffect } from 'react';
@@ -32,10 +32,6 @@ const ResumeContainer = styled.div`
 
 function Resume() {
     const dispatch = useAppDispatch();
-    const {} = useForm({
-        aboutMe: new FromControl('', []),
-    });
-
     const { data, loading } = useSelector((state: ReduxStorage) => state.resume);
 
     useEffect(() => {
