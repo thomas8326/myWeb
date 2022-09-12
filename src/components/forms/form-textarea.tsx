@@ -1,4 +1,4 @@
-import { InputHTMLAttributes } from 'react';
+import { ChangeEvent, InputHTMLAttributes } from 'react';
 import { FormCallback } from 'src/models/form';
 import styled from 'styled-components';
 
@@ -17,14 +17,9 @@ export interface FormTextareaType extends InputHTMLAttributes<HTMLTextAreaElemen
     name: string;
     idx?: number;
     value?: string;
-    callback: (e: FormCallback) => void;
+    callback?: (e: ChangeEvent<any>) => void;
 }
 
 export function FormTextarea({ callback, idx, ...props }: FormTextareaType) {
-    return (
-        <FormTextareaWrapper
-            {...props}
-            onInput={(e) => callback({ name: e.currentTarget.name, value: e.currentTarget.value, index: idx || 0 })}
-        ></FormTextareaWrapper>
-    );
+    return <FormTextareaWrapper {...props} onChange={(e) => callback && callback(e)}></FormTextareaWrapper>;
 }

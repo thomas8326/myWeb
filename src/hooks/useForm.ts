@@ -20,7 +20,7 @@ export function useFormGroup<T extends {}>(initialState: FormGroup) {
         setValues(newValues);
     }
 
-    const validate = (values: { [key: string]: FormControl<any> }) => {
+    const validate = (values: Record<string, FormControl<any>>) => {
         const error = Object.values(values).filter(value => {
             value.validations.forEach(validator => {
                 const { name, valid } = validator(value.getValue());
@@ -51,7 +51,7 @@ export function useFormGroup<T extends {}>(initialState: FormGroup) {
     return { controls, values, changeHandler, fetchValues, isValid };
 }
 
-export function useFormArray<T extends { [key: string]: any }>(initialState: FormArray) {
+export function useFormArray<T extends {}>(initialState: FormArray) {
     const [controls, setControls] = useState(initialState.controls);
     const [values, setValues] = useState<T[]>([]);
 

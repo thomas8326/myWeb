@@ -1,4 +1,4 @@
-import { InputHTMLAttributes } from 'react';
+import React, { InputHTMLAttributes } from 'react';
 import styled from 'styled-components';
 
 export const FormInputWrapper = styled.input`
@@ -13,15 +13,10 @@ export const FormInputWrapper = styled.input`
 `;
 
 interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
-    callback: (e: { name: string; value: any; index: number }) => void;
+    callback: (e: React.ChangeEvent<any>) => void;
     idx?: number;
 }
 
 export const FormInput = ({ callback, idx, ...props }: FormInputProps) => {
-    return (
-        <FormInputWrapper
-            {...props}
-            onInput={(e) => callback({ name: e.currentTarget.name, value: e.currentTarget.value, index: idx || 0 })}
-        ></FormInputWrapper>
-    );
+    return <FormInputWrapper {...props} onChange={callback}></FormInputWrapper>;
 };
