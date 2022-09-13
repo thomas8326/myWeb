@@ -18,12 +18,19 @@ const CardContainer = styled.div`
     border-radius: 5px;
     box-shadow: 0 4px 24px #1622330a, 0 -2px 24px #1622330a, 0 4px 4px #1622330a, 0 -2px 4px #1622330a;
     padding: 15px;
+`;
 
-    & > .btn-group {
-        position: absolute;
-        margin: 16px;
-        top: 0;
-        right: 0;
+const NewProjectButton = styled.div`
+    border: 1px dashed black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 15px 0;
+    padding: 100px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #f5f5f5;
     }
 `;
 
@@ -75,7 +82,7 @@ interface WorkExperienceProps {
 }
 
 function WorkExperienceForm(props: WorkExperienceProps) {
-    const { lng, workExperience } = props;
+    const { lng } = props;
 
     const [rowText] = useState(lng === LanguageType.Chinese ? CHINESE_WORDING : ENGLISH_WORDING);
     const initialValues = {
@@ -108,6 +115,8 @@ function WorkExperienceForm(props: WorkExperienceProps) {
         values.projects.splice(idx, 1);
         updateFields();
     };
+
+    const onUpdate = () => {};
 
     return (
         <>
@@ -148,17 +157,21 @@ function WorkExperienceForm(props: WorkExperienceProps) {
                                     callback={handleChange}
                                 ></FormTextarea>
                             </FromField>
-                            <div className="btn-group">
-                                <RaisedButton onClick={() => removeProject(idx)}>{rowText.DeleteProject}</RaisedButton>
-                            </div>
+                            {values.projects.length > 1 && (
+                                <div className="btn-group">
+                                    <RaisedButton onClick={() => removeProject(idx)}>
+                                        {rowText.DeleteProject}
+                                    </RaisedButton>
+                                </div>
+                            )}
                         </Fragment>
                     ))}
                 </FlexColumnLayout>
+                <NewProjectButton onClick={addProject}>{rowText.AddProject}</NewProjectButton>
+                <div className="btn-group">
+                    <RaisedButton onClick={onUpdate}>{rowText.Update}</RaisedButton>
+                </div>
             </WorkExperienceCard>
-            <div className="btn-group">
-                <RaisedButton onClick={addProject}>{rowText.AddProject}</RaisedButton>
-                {/* <RaisedButton onClick={onUpdate}>{rowText.Update}</RaisedButton> */}
-            </div>
         </>
     );
 }
