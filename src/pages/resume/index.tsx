@@ -13,16 +13,6 @@ import { ReduxStorage } from 'src/models/redux-storage';
 import WorkExperienceForm from 'src/pages/resume/components/resume-work-experience-form';
 
 const ResumeContainer = styled.div`
-    .btn-group {
-        display: flex;
-        justify-content: flex-end;
-        margin-top: 10px;
-
-        & > * {
-            margin-left: 6px;
-        }
-    }
-
     .company-info {
         .form-field + .form-field {
             margin-left: 12px;
@@ -48,8 +38,16 @@ function Resume() {
 
             <ResumeFormSection
                 title={TransKey.WorkExperience}
-                chinese={<WorkExperienceForm></WorkExperienceForm>}
-                english={<WorkExperienceForm></WorkExperienceForm>}
+                chinese={
+                    <WorkExperienceForm
+                        workExperiences={data?.[LanguageType.Chinese]?.workExperiences}
+                    ></WorkExperienceForm>
+                }
+                english={
+                    <WorkExperienceForm
+                        workExperiences={data?.[LanguageType.English]?.workExperiences}
+                    ></WorkExperienceForm>
+                }
             ></ResumeFormSection>
         </ResumeContainer>
     );

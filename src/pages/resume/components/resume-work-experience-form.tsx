@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { Fragment, ReactElement, useState } from 'react';
 import { useForm } from 'src/components/forms/form';
 import { FromField } from 'src/components/forms/form-field';
@@ -7,17 +7,31 @@ import { FormTextarea } from 'src/components/forms/form-textarea';
 import { useFormArray, useFormGroup } from 'src/hooks/useForm';
 import { AbstractControl, FormArray, FormControl, FormGroup } from 'src/models/form';
 import { CompanyProject, LanguageType, WorkExperience } from 'src/models/resume';
-import { MinusButton, PlusButton, RaisedButton } from 'src/styles/components/button';
+import { updateChineseWorkExperiences, updateEnglishWorkExperiences } from 'src/reducers/resume-slice';
+import { useAppDispatch } from 'src/reducers/storage';
+import { ButtonGroup, MinusButton, PlusButton, RaisedButton } from 'src/styles/components/button';
 import { HorizontalLine } from 'src/styles/components/line';
 import { FlexRowLayout, FlexColumnLayout } from 'src/styles/layouts/flex-layout';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
+
+const Container = styled.div`
+    & > * + * {
+        margin-top: 10px;
+    }
+`;
 
 const CardContainer = styled.div`
     position: relative;
     border-radius: 5px;
     box-shadow: 0 4px 24px #1622330a, 0 -2px 24px #1622330a, 0 4px 4px #1622330a, 0 -2px 4px #1622330a;
     padding: 15px;
+
+    & > .btn-group {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
 `;
 
 const NewProjectButton = styled.div`
@@ -34,14 +48,18 @@ const NewProjectButton = styled.div`
     }
 `;
 
-function WorkExperienceCard(props: { children: ReactElement | ReactElement[] }) {
-    const { children } = props;
+function WorkExperienceCard(props: {
+    children: ReactElement | ReactElement[];
+    onPlus?: () => void;
+    onMinus?: () => void;
+}) {
+    const { children, onPlus, onMinus } = props;
 
     return (
         <CardContainer>
             <div className="btn-group">
-                <MinusButton></MinusButton>
-                <PlusButton></PlusButton>
+                <MinusButton onClick={() => onMinus && onMinus()}></MinusButton>
+                <PlusButton onClick={() => onPlus && onPlus()}></PlusButton>
             </div>
             {children}
         </CardContainer>
@@ -78,36 +96,24 @@ const ENGLISH_WORDING = {
 
 interface WorkExperienceProps {
     lng?: LanguageType;
-    workExperience?: WorkExperience;
+    workExperiences?: WorkExperience[];
 }
 
-function WorkExperienceForm(props: WorkExperienceProps) {
-    const { lng } = props;
+interface experienceFormProps {
+    rowText: typeof CHINESE_WORDING;
+    experience: WorkExperience;
+    update: (experience: WorkExperience) => void;
+}
 
-    const [rowText] = useState(lng === LanguageType.Chinese ? CHINESE_WORDING : ENGLISH_WORDING);
-    const initialValues = {
-        companyName: '',
-        position: '',
-        startDate: '',
-        endDate: '',
-        projects: [
-            {
-                id: uuidv4(),
-                name: '',
-                describe: '',
-            },
-        ],
-    };
-    const { values, handleChange, updateFields } = useForm<typeof initialValues>({
-        initialValues: initialValues,
+function ExperienceForm(data: experienceFormProps) {
+    const { rowText, experience, update } = data;
+
+    const { values, handleChange, updateFields } = useForm<WorkExperience>({
+        initialValues: experience,
     });
 
-    useEffect(() => {
-        console.log(values);
-    }, [values]);
-
     const addProject = () => {
-        values.projects.push({ id: uuidv4(), name: '', describe: '' });
+        values.projects.push({ id: uuidv4(), name: '', description: '' });
         updateFields();
     };
 
@@ -116,63 +122,111 @@ function WorkExperienceForm(props: WorkExperienceProps) {
         updateFields();
     };
 
-    const onUpdate = () => {};
+    const onUpdate = () => {
+        console.log(values);
+        update(values);
+    };
 
     return (
         <>
-            <WorkExperienceCard>
-                <FlexRowLayout elementsMargin="8px" marginBottom="10px">
-                    <FromField fieldName={rowText.CompanyName} cssConfig={{ height: `${60}px` }}>
-                        <FormInput name="companyName" callback={handleChange}></FormInput>
-                    </FromField>
-                    <FromField fieldName={rowText.Position} cssConfig={{ height: `${60}px` }}>
-                        <FormInput name="position" callback={handleChange}></FormInput>
-                    </FromField>
-                </FlexRowLayout>
-                <FlexRowLayout elementsMargin="8px">
-                    <FromField fieldName={rowText.StartDate} cssConfig={{ height: `${60}px` }}>
-                        <FormInput name="startDate" callback={handleChange}></FormInput>
-                    </FromField>
-                    <FromField fieldName={rowText.EndDate} cssConfig={{ height: `${60}px` }}>
-                        <FormInput name="endDate" callback={handleChange}></FormInput>
-                    </FromField>
-                </FlexRowLayout>
-                <HorizontalLine />
-                <FlexColumnLayout elementsMargin="8px">
-                    {values.projects.map((value, idx) => (
-                        <Fragment key={value.id}>
-                            <FromField fieldName={rowText.ProjectName} cssConfig={{ height: `${60}px` }}>
-                                <FormInput
-                                    idx={idx}
-                                    name={`projects.${idx}.name`}
-                                    value={value.name}
-                                    callback={handleChange}
-                                ></FormInput>
-                            </FromField>
-                            <FromField fieldName={rowText.ProjectDetail} cssConfig={{ minHeight: `${140}px` }}>
-                                <FormTextarea
-                                    idx={idx}
-                                    name={`projects[${idx}].describe`}
-                                    value={value.describe}
-                                    callback={handleChange}
-                                ></FormTextarea>
-                            </FromField>
-                            {values.projects.length > 1 && (
-                                <div className="btn-group">
-                                    <RaisedButton onClick={() => removeProject(idx)}>
-                                        {rowText.DeleteProject}
-                                    </RaisedButton>
-                                </div>
-                            )}
-                        </Fragment>
-                    ))}
-                </FlexColumnLayout>
-                <NewProjectButton onClick={addProject}>{rowText.AddProject}</NewProjectButton>
-                <div className="btn-group">
-                    <RaisedButton onClick={onUpdate}>{rowText.Update}</RaisedButton>
-                </div>
-            </WorkExperienceCard>
+            <FlexRowLayout elementsMargin="8px" marginBottom="10px">
+                <FromField fieldName={rowText.CompanyName} cssConfig={{ height: `${60}px` }}>
+                    <FormInput name="companyName" value={values.companyName} callback={handleChange}></FormInput>
+                </FromField>
+                <FromField fieldName={rowText.Position} cssConfig={{ height: `${60}px` }}>
+                    <FormInput name="position" value={values.position} callback={handleChange}></FormInput>
+                </FromField>
+            </FlexRowLayout>
+            <FlexRowLayout elementsMargin="8px">
+                <FromField fieldName={rowText.StartDate} cssConfig={{ height: `${60}px` }}>
+                    <FormInput name="startDate" value={values.startDate} callback={handleChange}></FormInput>
+                </FromField>
+                <FromField fieldName={rowText.EndDate} cssConfig={{ height: `${60}px` }}>
+                    <FormInput name="endDate" value={values.endDate || ''} callback={handleChange}></FormInput>
+                </FromField>
+            </FlexRowLayout>
+            <HorizontalLine />
+            <FlexColumnLayout elementsMargin="8px">
+                {values.projects.map((value, idx) => (
+                    <Fragment key={value.id}>
+                        <FromField fieldName={rowText.ProjectName} cssConfig={{ height: `${60}px` }}>
+                            <FormInput
+                                idx={idx}
+                                name={`projects.${idx}.name`}
+                                value={value.name}
+                                callback={handleChange}
+                            ></FormInput>
+                        </FromField>
+                        <FromField fieldName={rowText.ProjectDetail} cssConfig={{ minHeight: `${140}px` }}>
+                            <FormTextarea
+                                idx={idx}
+                                name={`projects[${idx}].description`}
+                                value={value.description}
+                                callback={handleChange}
+                            ></FormTextarea>
+                        </FromField>
+                        {values.projects.length > 1 && (
+                            <div className="btn-group">
+                                <RaisedButton onClick={() => removeProject(idx)}>{rowText.DeleteProject}</RaisedButton>
+                            </div>
+                        )}
+                    </Fragment>
+                ))}
+            </FlexColumnLayout>
+            <NewProjectButton onClick={addProject}>{rowText.AddProject}</NewProjectButton>
+            <ButtonGroup position="end">
+                <RaisedButton onClick={onUpdate}>{rowText.Update}</RaisedButton>
+            </ButtonGroup>
         </>
+    );
+}
+
+function WorkExperienceForm(props: WorkExperienceProps) {
+    const { lng, workExperiences } = props;
+    const [experiences, setExperiences] = useState<WorkExperience[]>([]);
+    const dispatch = useAppDispatch();
+
+    const [rowText] = useState(lng === LanguageType.Chinese ? CHINESE_WORDING : ENGLISH_WORDING);
+
+    useEffect(() => {
+        setExperiences(workExperiences?.length ? workExperiences : [new WorkExperience()]);
+    }, [workExperiences]);
+
+    const updateExperience = (experience: WorkExperience) => {
+        const newExperiences = experiences.map((value) => (value.id === experience.id ? experience : value));
+
+        const callback =
+            lng === LanguageType.Chinese
+                ? () => updateChineseWorkExperiences(newExperiences)
+                : () => updateEnglishWorkExperiences(newExperiences);
+
+        dispatch(callback());
+    };
+
+    const onAddNewExperience = () => {
+        setExperiences((prev) => prev.concat(new WorkExperience()));
+    };
+
+    const onRemoveExperience = (id?: string) => {
+        id && setExperiences((prev) => prev.filter((v) => v.id !== id));
+    };
+
+    return (
+        <Container>
+            {experiences?.map((experience) => (
+                <WorkExperienceCard
+                    key={experience.id}
+                    onPlus={onAddNewExperience}
+                    onMinus={() => onRemoveExperience(experience.id)}
+                >
+                    <ExperienceForm
+                        experience={experience}
+                        rowText={rowText}
+                        update={updateExperience}
+                    ></ExperienceForm>
+                </WorkExperienceCard>
+            ))}
+        </Container>
     );
 }
 

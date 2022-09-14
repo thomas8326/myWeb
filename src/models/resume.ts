@@ -20,22 +20,29 @@ export interface BasicInfo {
 }
 
 export class WorkExperience {
-    id: string;
+    id?: string;
     companyName: string;
-    startDate: Date;
-    endDate?: Date;
+    position: string;
+    startDate: string;
+    endDate?: string;
     projects: CompanyProject[];
 
-    constructor(data?: { companyName: string }) {
-        this.id = uuidv4();
+    constructor(data?: WorkExperience) {
+        this.id = data?.id || uuidv4();
         this.companyName = data?.companyName || '';
-        this.startDate = new Date();
-        this.endDate = new Date();
-        this.projects = [];
+        this.position = data?.position || '';
+        this.startDate = data?.startDate || '';
+        this.endDate = data?.endDate || '';
+        this.projects = data?.projects || [{
+            id: uuidv4(),
+            name: '',
+            description: '',
+        },];
     }
 }
 
 export interface CompanyProject {
     id: string;
+    name: string;
     description: string;
 }
