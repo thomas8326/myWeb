@@ -1,12 +1,10 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import { Fragment, ReactElement, useState } from 'react';
 import { useForm } from 'src/components/forms/form';
 import { FromField } from 'src/components/forms/form-field';
 import { FormInput } from 'src/components/forms/form-input';
 import { FormTextarea } from 'src/components/forms/form-textarea';
-import { useFormArray, useFormGroup } from 'src/hooks/useForm';
-import { AbstractControl, FormArray, FormControl, FormGroup } from 'src/models/form';
-import { CompanyProject, LanguageType, WorkExperience } from 'src/models/resume';
+import { LanguageType, WorkExperience } from 'src/models/resume';
 import { updateChineseWorkExperiences, updateEnglishWorkExperiences } from 'src/reducers/resume-slice';
 import { useAppDispatch } from 'src/reducers/storage';
 import { ButtonGroup, MinusButton, PlusButton, RaisedButton } from 'src/styles/components/button';
@@ -123,7 +121,6 @@ function ExperienceForm(data: experienceFormProps) {
     };
 
     const onUpdate = () => {
-        console.log(values);
         update(values);
     };
 

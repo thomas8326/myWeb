@@ -1,12 +1,13 @@
 import { FromField } from 'src/components/forms/form-field';
 import { FormTextarea } from 'src/components/forms/form-textarea';
 import { useFormGroup } from 'src/hooks/useForm';
-import { RaisedButton } from 'src/styles/components/button';
+import { ButtonGroup, RaisedButton } from 'src/styles/components/button';
 import { FormControl, FormGroup } from 'src/models/form';
 import { useAppDispatch } from 'src/reducers/storage';
 import { BasicInfo, LanguageType } from 'src/models/resume';
 import { useEffect, useState } from 'react';
 import { updateChineseBasicInfo, updateEnglishBasicInfo } from 'src/reducers/resume-slice';
+import { useForm } from 'src/components/forms/form';
 
 interface BasicInfoProps {
     lng?: LanguageType;
@@ -26,18 +27,8 @@ const ENGLISH_WORDING = {
 function BasicInfoForm(props: BasicInfoProps) {
     const { basicInfo, lng } = props;
     const dispatch = useAppDispatch();
-    const { controls, values, fetchValues, changeHandler } = useFormGroup<BasicInfo>(
-        new FormGroup({
-            aboutMe: new FormControl(''),
-        }),
-    );
+    const { values, handleChange } = useForm<BasicInfo>({ initialValues: basicInfo || { aboutMe: '' } });
     const [rowText] = useState(lng === LanguageType.Chinese ? CHINESE_WORDING : ENGLISH_WORDING);
-
-    useEffect(() => {
-        if (basicInfo) {
-            fetchValues(basicInfo);
-        }
-    }, [basicInfo]);
 
     const onUpdateBasicInfo = () => {
         if (values) {
@@ -53,15 +44,11 @@ function BasicInfoForm(props: BasicInfoProps) {
     return (
         <>
             <FromField fieldName={rowText.AboutMe} cssConfig={{ minHeight: `${140}px` }} isTranslate={false}>
-                <FormTextarea
-                    name="aboutMe"
-                    value={controls['aboutMe'].controls}
-                    callback={changeHandler}
-                ></FormTextarea>
+                <FormTextarea name="aboutMe" value={values.aboutMe} callback={handleChange}></FormTextarea>
             </FromField>
-            <div className="btn-group">
+            <ButtonGroup position="end">
                 <RaisedButton onClick={onUpdateBasicInfo}>{rowText.Update}</RaisedButton>
-            </div>
+            </ButtonGroup>
         </>
     );
 }

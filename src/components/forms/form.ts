@@ -1,5 +1,5 @@
 import { isEmpty, isNil } from 'ramda';
-import React, { useCallback, useReducer, useRef } from 'react';
+import React, { useCallback, useEffect, useReducer, useRef } from 'react';
 
 const setIn = (obj: {}, path: string, value: any) => {
     const newPath = path.split(/[\[\]\.]/).filter(v => !isEmpty(v));
@@ -30,6 +30,7 @@ type FormValues = Record<string, any>;
 type FormMessage<FormValues> =
     | { type: 'SET_VALUES'; payload: FormValues }
     | { type: 'SET_FIELD_VALUE'; payload: { field: string; value?: any } }
+    | { type: 'RESET_FORM', payload: FormState<FormValues> }
     | { type: 'UPDATE_FIELDS' };
 
 
@@ -51,6 +52,31 @@ interface FormReturn<T> {
 
 export const useForm = <T>(props: FormProps): FormReturn<T> => {
     const initialValues = useRef(props.initialValues);
+    const isMounted = React.useRef<boolean>(false);
+
+    useEffect(() => {
+        isMounted.current = true;
+        return () => { isMounted.current = false }
+    }, []);
+
+
+    const resetForm = useCallback(() => {
+        const values = initialValues.current;
+
+        dispatch({
+            type: "RESET_FORM",
+            payload: {
+                values,
+            }
+        })
+    }, []);
+
+    useEffect(() => {
+        if (isMounted.current && JSON.stringify(initialValues.current) !== JSON.stringify(props.initialValues)) {
+            initialValues.current = props.initialValues;
+            resetForm();
+        }
+    }, [props.initialValues, resetForm]);
 
     const formReducer = (state: FormState<FormValues>, msg: FormMessage<FormValues>) => {
         switch (msg.type) {
@@ -59,8 +85,9 @@ export const useForm = <T>(props: FormProps): FormReturn<T> => {
             case 'SET_FIELD_VALUE':
                 return { ...state, values: setIn(state.values, msg.payload.field, msg.payload.value) };
             case 'UPDATE_FIELDS':
-                console.log("UPDATE_FIELDS", state.values);
                 return { ...state, values: state.values };
+            case 'RESET_FORM':
+                return { ...state, ...msg.payload };
             default:
                 return state;
         }
@@ -97,6 +124,8 @@ export const useForm = <T>(props: FormProps): FormReturn<T> => {
                 ? ((parsed = parseFloat(value)), isNaN(parsed) ? '' : parsed)
                 : value;
 
+            console.log(field, currentVal);
+
             if (field) {
                 setFieldValue(field, currentVal);
             }
@@ -109,6 +138,7 @@ export const useForm = <T>(props: FormProps): FormReturn<T> => {
             type: 'UPDATE_FIELDS',
         });
     }
+
 
     return {
         ...state,
