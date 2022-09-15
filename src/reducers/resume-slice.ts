@@ -49,6 +49,16 @@ const resumeSlice = createSlice({
                     state.data[LanguageType.English]!.basicInfo = action.payload;
                 }
             })
+            .addCase(updateChineseWorkExperiences.fulfilled, (state, action: PayloadAction<WorkExperience[]>) => {
+                if (state?.data && state.data[LanguageType.Chinese]) {
+                    state.data[LanguageType.Chinese]!.workExperiences = action.payload;
+                }
+            })
+            .addCase(updateEnglishWorkExperiences.fulfilled, (state, action: PayloadAction<WorkExperience[]>) => {
+                if (state?.data && state.data[LanguageType.English]) {
+                    state.data[LanguageType.English]!.workExperiences = action.payload;
+                }
+            })
     },
 });
 
@@ -69,6 +79,16 @@ export const updateChineseBasicInfo = createAsyncThunk('update/chinese/basicInfo
 
 export const updateEnglishBasicInfo = createAsyncThunk('update/english/basicInfo', async (body: BasicInfo) => {
     const response = await http.post<BasicInfo>(`resume/${LanguageType.English}/basicInfo`, body);
+    return response;
+});
+
+export const updateChineseWorkExperiences = createAsyncThunk('update/chinese/workExperiences', async (body: WorkExperience[]) => {
+    const response = await http.post<WorkExperience[]>(`resume/${LanguageType.Chinese}/workExperiences`, body);
+    return response;
+});
+
+export const updateEnglishWorkExperiences = createAsyncThunk('update/english/workExperiences', async (body: WorkExperience[]) => {
+    const response = await http.post<WorkExperience[]>(`resume/${LanguageType.English}/workExperiences`, body);
     return response;
 });
 
