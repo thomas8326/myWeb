@@ -2,6 +2,25 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { solid, regular, brands } from '@fortawesome/fontawesome-svg-core/import.macro'; // <-- import styles to be used
 
+export const ButtonGroup = styled.div<{ position?: 'end' | 'start' | 'center' }>`
+    display: flex;
+    justify-content: ${(props) => {
+        switch (props?.position) {
+            case 'end':
+                return 'flex-end';
+            case 'start':
+                return 'flex-start';
+            default:
+                'center';
+        }
+    }};
+    margin-top: 10px;
+
+    & > * {
+        margin-left: 6px;
+    }
+`;
+
 const Button = styled.button`
     display: flex;
     box-sizing: border-box;
