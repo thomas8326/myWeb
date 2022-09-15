@@ -1,5 +1,5 @@
 import { BaseSyntheticEvent, ReactElement } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { SmallText } from 'src/styles/components/font';
 
 const TagContainer = styled.div`
@@ -7,13 +7,21 @@ const TagContainer = styled.div`
     margin-left: -6px;
 `;
 
-const TagWrapper = styled.div`
+const TagWrapper = styled.div<{ active: boolean }>`
     clip-path: polygon(20% 0%, 86% 0, 100% 100%, 0% 100%);
-    background: white;
     padding: 5px 15px;
     cursor: pointer;
     width: 40px;
     text-align: center;
+
+    ${(props) =>
+        props.active
+            ? css`
+                  background: white;
+              `
+            : css`
+                  background: #e9e9e9;
+              `}
 `;
 
 type TagProps = {
@@ -25,7 +33,7 @@ type TagProps = {
 export function Tag(props: TagProps) {
     return (
         <TagContainer onClick={props.onClick} style={{ zIndex: props.active ? 1 : 0 }}>
-            <TagWrapper>
+            <TagWrapper active={!!props.active}>
                 <SmallText>{props.children}</SmallText>
             </TagWrapper>
         </TagContainer>
