@@ -47,6 +47,7 @@ interface FormReturn<T> {
     values: T;
     initialValues: FormValues,
     handleChange: (event: React.ChangeEvent<any>) => void,
+    setFieldValue: (field: string, value: any) => void;
     updateFields: () => void,
 }
 
@@ -75,6 +76,7 @@ export const useForm = <T>(props: FormProps): FormReturn<T> => {
         if (isMounted.current && JSON.stringify(initialValues.current) !== JSON.stringify(props.initialValues)) {
             initialValues.current = props.initialValues;
             resetForm();
+            Promise.allSettled
         }
     }, [props.initialValues, resetForm]);
 
@@ -144,6 +146,7 @@ export const useForm = <T>(props: FormProps): FormReturn<T> => {
         ...state,
         initialValues: initialValues.current,
         handleChange,
+        setFieldValue,
         updateFields
     };
 };

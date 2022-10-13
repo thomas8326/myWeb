@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Fragment, ReactElement, useState } from 'react';
 import { useForm } from 'src/components/forms/form';
+import { FormDate } from 'src/components/forms/form-date';
 import { FromField } from 'src/components/forms/form-field';
 import { FormInput } from 'src/components/forms/form-input';
 import { FormTextarea } from 'src/components/forms/form-textarea';
@@ -106,7 +107,7 @@ interface experienceFormProps {
 function ExperienceForm(data: experienceFormProps) {
     const { rowText, experience, update } = data;
 
-    const { values, handleChange, updateFields } = useForm<WorkExperience>({
+    const { values, handleChange, setFieldValue, updateFields } = useForm<WorkExperience>({
         initialValues: experience,
     });
 
@@ -136,10 +137,10 @@ function ExperienceForm(data: experienceFormProps) {
             </FlexRowLayout>
             <FlexRowLayout elementsMargin="8px">
                 <FromField fieldName={rowText.StartDate} cssConfig={{ height: `${60}px` }}>
-                    <FormInput name="startDate" value={values.startDate} callback={handleChange}></FormInput>
+                    <FormDate value={values.startDate} callback={(date) => setFieldValue('startDate', date)}></FormDate>
                 </FromField>
                 <FromField fieldName={rowText.EndDate} cssConfig={{ height: `${60}px` }}>
-                    <FormInput name="endDate" value={values.endDate || ''} callback={handleChange}></FormInput>
+                    <FormDate value={values.endDate} callback={(date) => setFieldValue('endDate', date)}></FormDate>
                 </FromField>
             </FlexRowLayout>
             <HorizontalLine />
