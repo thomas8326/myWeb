@@ -18,7 +18,7 @@ const Repo = styled.li`
 
 const RepoStar = styled.div`
   align-items: center;
-  width: 50px;
+  width: 70px;
   margin: auto 0 auto auto;
 `;
 
@@ -47,10 +47,6 @@ export default function GithubRepoList(props: InfiniteScrollProps<{ searchName: 
         },
       })
       .then((response) => {
-        if (response.status !== 204) {
-          return;
-        }
-
         if (isLoadCompleted && !response.data.items.length) {
           isLoadCompleted(true);
           return;
