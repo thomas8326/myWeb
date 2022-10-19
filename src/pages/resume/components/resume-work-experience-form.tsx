@@ -72,6 +72,7 @@ const CHINESE_WORDING = {
     EndDate: '結束時間',
     ProjectName: '專案名稱',
     ProjectDetail: '專案細節',
+    ProjectAccomplish: '專案成就',
     DeleteProject: '刪除專案',
     AddProject: '新增專案',
     DeleteExperience: '刪除工作經驗',
@@ -86,6 +87,7 @@ const ENGLISH_WORDING = {
     EndDate: 'End Date',
     ProjectName: 'Project Name',
     ProjectDetail: 'Project Detail',
+    ProjectAccomplish: 'Project Accomplish',
     DeleteProject: 'Delete Project',
     AddProject: 'Add Project',
     DeleteExperience: 'Delete Experience',
@@ -112,7 +114,7 @@ function ExperienceForm(data: experienceFormProps) {
     });
 
     const addProject = () => {
-        values.projects.push({ id: uuidv4(), name: '', description: '' });
+        values.projects.push({ id: uuidv4(), name: '', description: '', accomplish: '' });
         updateFields();
     };
 
@@ -160,6 +162,14 @@ function ExperienceForm(data: experienceFormProps) {
                                 idx={idx}
                                 name={`projects[${idx}].description`}
                                 value={value.description}
+                                callback={handleChange}
+                            ></FormTextarea>
+                        </FromField>
+                        <FromField fieldName={rowText.ProjectAccomplish} cssConfig={{ minHeight: `${140}px` }}>
+                            <FormTextarea
+                                idx={idx}
+                                name={`projects[${idx}].accomplish`}
+                                value={value.accomplish}
                                 callback={handleChange}
                             ></FormTextarea>
                         </FromField>

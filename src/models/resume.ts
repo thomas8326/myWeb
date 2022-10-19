@@ -16,6 +16,10 @@ export interface ResumeDetail {
 }
 
 export interface BasicInfo {
+    name: string;
+    phone: string;
+    email: string;
+    summary: string;
     aboutMe: string;
 }
 
@@ -37,6 +41,7 @@ export class WorkExperience {
             id: uuidv4(),
             name: '',
             description: '',
+            accomplish: '',
         },];
     }
 }
@@ -45,4 +50,5 @@ export interface CompanyProject {
     id: string;
     name: string;
     description: string;
+    accomplish: string;
 }

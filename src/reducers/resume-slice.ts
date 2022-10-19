@@ -9,12 +9,20 @@ const initState: DataResponse<Resume | null> = {
     data: {
         [LanguageType.Chinese]: {
             basicInfo: {
+                name: '',
+                phone: '',
+                email: '',
+                summary: '',
                 aboutMe: ''
             },
             workExperiences: []
         },
         [LanguageType.English]: {
             basicInfo: {
+                name: '',
+                phone: '',
+                email: '',
+                summary: '',
                 aboutMe: ''
             },
             workExperiences: []
