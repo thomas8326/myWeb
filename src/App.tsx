@@ -11,6 +11,8 @@ import { ModalProvider } from 'src/contexts/modal';
 import { ClientStorageProvider } from 'src/contexts/client-storage';
 import { Provider } from 'react-redux';
 import { reduxStorage } from 'src/reducers/storage';
+import { ResumeViewer } from 'src/pages/resume/resumeViewer';
+import { MainPathUrl } from 'src/enums/main-path-url.enum';
 
 function App() {
     return (
@@ -22,10 +24,11 @@ function App() {
                             <BrowserRouter>
                                 <Routes>
                                     <Route path="/" element={<MainPage />}>
-                                        <Route path="show-room" element={<Showroom />}></Route>
+                                        <Route path={MainPathUrl.Showroom} element={<Showroom />}></Route>
+                                        <Route path={MainPathUrl.Resume} element={<ResumeViewer />}></Route>
                                     </Route>
-                                    <Route path="admin-dashboard" element={<DashBoard />}>
-                                        <Route path="resume" element={<Resume />}></Route>
+                                    <Route path={MainPathUrl.DashBoard} element={<DashBoard />}>
+                                        <Route path={MainPathUrl.Resume} element={<Resume />}></Route>
                                     </Route>
                                 </Routes>
                             </BrowserRouter>

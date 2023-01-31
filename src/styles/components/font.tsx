@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Text = styled.span`
+const Text = styled.span`
     font-size: 14px;
 `;
 

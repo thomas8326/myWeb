@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export interface CssConfig {
     className?: string;
 
@@ -11,4 +13,13 @@ export interface CssConfig {
     margin?: string;
 
     elementsMargin?: string;
+    columns?: number;
+
+    alignItems?: string;
+
+    listStyleType?: string;
+    fontSize?: number;
+    color?: string;
+
+    children?: ReactNode
 }

@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import image from 'src/assets/avatars/S__15695887.jpg';
 import { Avatar } from 'src/styles/components/image';
+import { useNavigate } from 'react-router-dom';
+import { MainPathUrl } from 'src/enums/main-path-url.enum';
 
 const SideNavContainer = styled.div`
     display: flex;
@@ -30,20 +32,24 @@ const SideNavItem = styled.li`
     cursor: pointer;
 `;
 
-const MainSideNav = () => (
-    <SideNavContainer>
-        <SideNavInfo>
-            <Avatar src={image} />
-            <span>施宏儒</span>
-            <p>我是一個...</p>
-        </SideNavInfo>
-        <SideNavList>
-            <SideNavItem>Home</SideNavItem>
-            <SideNavItem>Resume</SideNavItem>
-            <SideNavItem>My Components</SideNavItem>
-            <SideNavItem>My Projects</SideNavItem>
-        </SideNavList>
-    </SideNavContainer>
-);
+const MainSideNav = () => {
+    const navigate = useNavigate();
+
+    return (
+        <SideNavContainer>
+            <SideNavInfo>
+                <Avatar src={image} />
+                <span>施宏儒</span>
+                <p>我是一個...</p>
+            </SideNavInfo>
+            <SideNavList>
+                <SideNavItem>Home</SideNavItem>
+                <SideNavItem onClick={() => navigate(MainPathUrl.Resume)}>Resume</SideNavItem>
+                <SideNavItem>My Components</SideNavItem>
+                <SideNavItem>My Projects</SideNavItem>
+            </SideNavList>
+        </SideNavContainer>
+    );
+};
 
 export default MainSideNav;

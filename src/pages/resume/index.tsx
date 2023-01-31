@@ -9,8 +9,8 @@ import styled from 'styled-components';
 import BasicInfoForm from 'src/pages/resume/components/resume-basic-info-form';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { ReduxStorage } from 'src/models/redux-storage';
 import WorkExperienceForm from 'src/pages/resume/components/resume-work-experience-form';
+import { ReduxStorage } from 'src/models/redux-storage';
 
 const ResumeContainer = styled.div`
     .company-info {
@@ -22,7 +22,7 @@ const ResumeContainer = styled.div`
 
 function Resume() {
     const dispatch = useAppDispatch();
-    const { data, loading } = useSelector((state: ReduxStorage) => state.resume);
+    const { data } = useSelector((state: ReduxStorage) => state.resume);
 
     useEffect(() => {
         dispatch(getResume());

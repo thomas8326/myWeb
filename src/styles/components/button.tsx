@@ -59,7 +59,6 @@ export const BasicButton = styled(Button)`
 export const RaisedButton = styled(Button)<{ bgColor?: string }>`
     box-shadow: 0 3px 1px -2px #0003, 0 2px 2px #00000024, 0 1px 5px #0000001f;
     background: ${(props) => props.bgColor || 'white'};
-}
 `;
 
 export const IconButton = styled(BasicButton)`
@@ -70,7 +69,6 @@ export const IconButton = styled(BasicButton)`
     flex-shrink: 0;
     line-height: 40px;
     border-radius: 50%;
-}
 `;
 
 export const SettingButton = (props: any) => (

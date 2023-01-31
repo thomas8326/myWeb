@@ -17,9 +17,16 @@ const MainLayoutContainer = styled.div`
     }
 `;
 
+const Divider = styled.div`
+    height: 100%;
+    width: 2px;
+    cursor: col-resize;
+`;
+
 const MainPage = () => (
     <MainLayoutContainer>
         <div className="side-nav">{<MainSideNav />}</div>
+        <Divider></Divider>
         <div className="main-view">
             <Outlet />
         </div>

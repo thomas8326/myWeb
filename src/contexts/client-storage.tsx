@@ -1,12 +1,14 @@
-import { createContext, ReactElement, useCallback, useEffect, useState } from 'react';
+import { createContext, ReactElement, useCallback, useEffect, useMemo, useState } from 'react';
 import { ClientStorage } from 'src/models/client-storage';
+import { LanguageType } from 'src/models/resume';
 
 interface ContextState {
     clientStorage: ClientStorage | null;
+    getLanguage: LanguageType;
     setLocalStorage: (key: keyof ClientStorage, value: any) => void;
 }
 
-export const ClientStorageContext = createContext({} as ContextState);
+export const ClientStorageContext = createContext<ContextState>({} as ContextState);
 
 export const ClientStorageProvider = (props: { children: ReactElement }) => {
     const [clientStorage, setClientStorage] = useState<ClientStorage>({
@@ -18,8 +20,18 @@ export const ClientStorageProvider = (props: { children: ReactElement }) => {
         setClientStorage({ [key]: value });
     };
 
+    const language = useMemo(() => {
+        switch (clientStorage.language) {
+            case 'zh_tw':
+                return LanguageType.Chinese;
+            case 'en':
+            default:
+                return LanguageType.English;
+        }
+    }, [clientStorage]);
+
     return (
-        <ClientStorageContext.Provider value={{ setLocalStorage, clientStorage }} {...props}>
+        <ClientStorageContext.Provider value={{ setLocalStorage, clientStorage, getLanguage: language }} {...props}>
             {props.children}
         </ClientStorageContext.Provider>
     );
